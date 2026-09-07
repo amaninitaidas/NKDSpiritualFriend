@@ -1,4 +1,59 @@
 let now = new Date();
+let loginData = "";
+document.addEventListener("DOMContentLoaded", async function () {
+  loginData = await DB_GET(
+    INDEX_DB.storeKey,
+    INDEX_DB.dbName,
+    INDEX_DB.storeName,
+  );
+
+  if (loginData) {
+    // Auto login
+    renderMenus(loginData);
+    SHOW_SPECIFIC_DIV("userMenuPopup");
+  } else {
+    SHOW_SPECIFIC_DIV("mainMenuPopup");
+  }
+});
+
+function renderMenus(loginData) {
+  selectedFacilitator = loginData;
+  document.querySelectorAll(".user-info-block").forEach((element) => {
+    element.innerText = loginData.name;
+  });
+  let admin_div = document.getElementById("adminDropdown");
+  if (loginData.role.includes("admin")) {
+    admin_div.hidden = false;
+  } else {
+    admin_div.hidden = true;
+  }
+}
+
+function SHOW_BUTTON_BY_ADMIN_ROLE(buttonId, roleKey, roleObj) {
+  const button = document.getElementById(buttonId);
+  if (!button) return;
+
+  const userRoleValue = roleObj?.[roleKey]?.toString().trim().toLowerCase();
+
+  if (userRoleValue === "admin") {
+    button.style.display = "inline-block";
+  } else {
+    button.style.display = "none";
+  }
+}
+
+function setUserNameOnFrontScreen(devName) {
+  const loginUserDiv = document.getElementById("login-user-name-div_fp");
+  const loginUserLabel = document.getElementById("login-user-name-lbl_fp");
+
+  if (devName) {
+    loginUserDiv.style.display = "block";
+    loginUserLabel.innerHTML = `<strong>${devName}</strong>`;
+  } else {
+    loginUserDiv.style.display = "none";
+    loginUserLabel.innerHTML = `<strong>${devName}</strong>`;
+  }
+}
 
 function formatDuration(startTimestamp, endTimestamp) {
   // Calculate the difference in milliseconds
