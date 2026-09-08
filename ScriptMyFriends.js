@@ -31,6 +31,9 @@ async function openSpiritualFriendsWindow() {
 }
 
 function renderAssociatedPeople(devotees = [], students = []) {
+  devotees.sort((a, b) => a.dueDays - b.dueDays);
+
+  students.sort((a, b) => a.dueDays - b.dueDays);
   renderDevoteeTable(devotees);
 
   renderStudentTable(students);
@@ -105,19 +108,19 @@ function renderDevoteeTable(devotees = []) {
 
         <button
           class="people-action-btn view-btn"
-          onclick="">
+          onclick="" disbabled>
           View Details
         </button>
 
         <button
           class="people-action-btn meet-btn"
-          onclick="meetPersonNow('devotee', '${devotee.id}')">
+          onclick="meetPersonNow('devotee', '${devotee.id}', '${devotee.name}')">
           Meet Now
         </button>
 
         <button
           class="people-action-btn history-btn"
-          onclick="">
+          onclick="" disbabled>
           Meeting History
         </button>
 
@@ -194,19 +197,19 @@ function renderStudentTable(students = []) {
 
         <button
           class="people-action-btn view-btn"
-          onclick="viewPersonDetails('student', '${student.id}')">
+          onclick="viewPersonDetails('student', '${student.id}', '${student.name}')" disbabled>
           View Details
         </button>
 
         <button
           class="people-action-btn meet-btn"
-          onclick="meetPersonNow('student', '${student.id}')">
+          onclick="meetPersonNow('student', '${student.id}', '${student.name}')">
           Meet Now
         </button>
 
         <button
           class="people-action-btn history-btn"
-          onclick="viewMeetingHistory('student', '${student.id}')">
+          onclick="viewMeetingHistory('student', '${student.id}')" disbabled>
           Meeting History
         </button>
 

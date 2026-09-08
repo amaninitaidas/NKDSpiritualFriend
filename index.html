@@ -241,35 +241,99 @@
           <br />
           <h2>My Spiritual Friends</h2>
 
-        <!-- ================= DEVOTEES ================= -->
+          <!-- ================= DEVOTEES ================= -->
 
-        <div class="associated-section">
-          <div class="associated-section-header">
-            <h3>Devotees</h3>
-            <span id="devoteeCount" class="people-count">0</span>
+          <div class="associated-section">
+            <div class="associated-section-header">
+              <h3>Devotees</h3>
+              <span id="devoteeCount" class="people-count">0</span>
+            </div>
+
+            <div id="devoteeTableContainer" class="people-table-container">
+              <!-- Devotee table will be generated here -->
+            </div>
           </div>
 
-          <div id="devoteeTableContainer" class="people-table-container">
-            <!-- Devotee table will be generated here -->
+          <br /><br />
+
+          <!-- ================= STUDENTS ================= -->
+
+          <div class="associated-section">
+            <div class="associated-section-header">
+              <h3>Students</h3>
+              <span id="studentCount" class="people-count">0</span>
+            </div>
+
+            <div id="studentTableContainer" class="people-table-container">
+              <!-- Student table will be generated here -->
+            </div>
+          </div>
+
+          <button class="red" onclick="SHOW_SPECIFIC_DIV('userMenuPopup')">
+            Back
+          </button>
+        </div>
+      </div>
+
+      <!-- Meeting Form -->
+
+      <div class="popup" id="meetingFormContainer">
+        <div class="popup-content scrollable-content">
+          <img
+            src="https://drive.google.com/thumbnail?id=1aYobBIvFM5yJUgqLktnHjzwxuFX0OfGn&sz=w500"
+            alt="NKD Logo"
+          />
+
+          <div>
+            <p class="user-info-block"></p>
+          </div>
+
+          <br />
+          <h2 id="meetingHeader"></h2>
+
+          <!-- Dynamic meeting form will be inserted here -->
+          <div id="meetingForm"></div>
+
+          <div class="button-row">
+            <button
+              type="button"
+              class="purple"
+              onclick="SHOW_SPECIFIC_DIV('userMenuPopup')"
+            >
+              Home
+            </button>
+            <button
+              type="button"
+              class="yellow"
+              onclick="SHOW_SPECIFIC_DIV('myFriendsPopup')"
+            >
+              Back
+            </button>
+
+            <button
+              type="button"
+              class="red"
+              onclick="
+                SHOW_CONFIRMATION_POPUP(
+                  'Are you sure you want to reset the form?',
+                  resetMeetingForm,
+                )
+              "
+            >
+              Reset
+            </button>
+
+            <button
+              type="button"
+              class="green"
+              onclick="saveMeeting()"
+              disabled
+              id="meetingSubmitBtn"
+            >
+              Submit
+            </button>
           </div>
         </div>
-
-        <br/><br/>
-
-        <!-- ================= STUDENTS ================= -->
-
-        <div class="associated-section">
-          <div class="associated-section-header">
-            <h3>Students</h3>
-            <span id="studentCount" class="people-count">0</span>
-          </div>
-
-          <div id="studentTableContainer" class="people-table-container">
-            <!-- Student table will be generated here -->
-          </div>
-        </div>
-
-        <button class="red" onclick="SHOW_SPECIFIC_DIV('userMenuPopup')">Back</button>
       </div>
     </div>
 
@@ -277,5 +341,6 @@
     <script src="ScriptConstants.js"></script>
     <script src="Script.js"></script>
     <script src="ScriptMyFriends.js"></script>
+    <script src="ScriptMeetFriend.js"></script>
   </body>
 </html>

@@ -1867,6 +1867,8 @@ input[type="radio"] {
 .error {
   color: red;
   font-size: 16px;
+  text-align: center;
+  margin-bottom: 15px;
 }
 
 .divider {
@@ -1962,14 +1964,15 @@ input[type="radio"] {
   background-color: var(--primary-color);
 }
 .accordion-header.active {
-  background-color: #dd7b12;
+  background-color: var(--secondary-color);
 }
 .accordion-content {
   text-align: left;
   display: none;
+  margin-top: 6px;
   padding: 10px;
   border-left: 4px solid var(--primary-color);
-  background: #c6c8d1;
+  background: var(--border-color);
 }
 
 .icon {
