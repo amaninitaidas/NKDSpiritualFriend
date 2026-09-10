@@ -108,19 +108,19 @@ function renderDevoteeTable(devotees = []) {
 
         <button
           class="people-action-btn view-btn"
-          onclick="" disbabled>
+          onclick="" disabled>
           View Details
         </button>
 
         <button
           class="people-action-btn meet-btn"
-          onclick="meetPersonNow('devotee', '${devotee.id}', '${devotee.name}')">
+          onclick="meetPersonNow('devotee', '${devotee.id}', '${devotee.name.split("\n")[0]}')">
           Meet Now
         </button>
 
         <button
           class="people-action-btn history-btn"
-          onclick="" disbabled>
+          onclick="" disabled>
           Meeting History
         </button>
 
@@ -161,6 +161,8 @@ function renderStudentTable(students = []) {
       <tr>
         <th>Name</th>
         <th>Category</th>
+        <th>Last Weekly Meeting Date</th>
+        <th>Weekly Meeting Due In (Days)</th>
         <th>Last Meeting Date</th>
         <th>Meeting Due In (Days)</th>
         <th>Actions</th>
@@ -186,6 +188,14 @@ function renderStudentTable(students = []) {
       </td>
 
       <td>
+        ${formatDateFriends(student.lastWeeklyMeetingDate)}
+      </td>
+
+      <td class="${dueClass}">
+          ${student.weeklyDueDays} 
+    </td>
+
+      <td>
         ${formatDateFriends(student.lastMeetingDate)}
       </td>
 
@@ -197,19 +207,27 @@ function renderStudentTable(students = []) {
 
         <button
           class="people-action-btn view-btn"
-          onclick="viewPersonDetails('student', '${student.id}', '${student.name}')" disbabled>
+          onclick="viewPersonDetails('student', '${student.id}', '${student.name.split("\n")[0]}')" disabled>
           View Details
         </button>
 
         <button
           class="people-action-btn meet-btn"
-          onclick="meetPersonNow('student', '${student.id}', '${student.name}')">
-          Meet Now
+          onclick="meetPersonNow('student', '${student.id}', '${student.name.split("\n")[0]}')">
+          General Meeting
+        </button>
+
+        <button
+            type="button"
+            class="people-action-btn weekly-btn"
+            onclick="weeklyMeetingNow('${student.id}', '${student.name.split("\n")[0]}')" disabled
+            >
+            Weekly Meeting
         </button>
 
         <button
           class="people-action-btn history-btn"
-          onclick="viewMeetingHistory('student', '${student.id}')" disbabled>
+          onclick="viewMeetingHistory('student', '${student.id}')" disabled>
           Meeting History
         </button>
 

@@ -2,10 +2,15 @@
   /* NKD Brand Colours */
 
   --primary-color: #0f365b;
+  --primary-color-light: #74bcff;
   --secondary-color: #3f77bb;
+  --tertiary-color: #556192;
+  --tertiary-color-light: #7b8dd1;
 
-  --success-color: #76b843;
+  --success-color: #4caf50;
+  --success-color-light: #a5d6a7;
   --accent-color: #d5952a;
+  --accent-color-light: #f1be71;
   --danger-color: #e6324d;
 
   /* UI */
@@ -212,6 +217,23 @@
   color: var(--white-color);
 }
 
+.view-btn:disabled {
+  background-color: var(--primary-color-light);
+  color: var(--white-color);
+  cursor: not-allowed;
+}
+
+.weekly-btn {
+  background-color: var(--tertiary-color);
+  color: var(--white-color);
+}
+
+.weekly-btn:disabled {
+  background-color: var(--tertiary-color-light);
+  color: var(--white-color);
+  cursor: not-allowed;
+}
+
 /* Meet Now */
 
 .meet-btn {
@@ -219,11 +241,23 @@
   color: var(--white-color);
 }
 
+.meet-btn:disabled {
+  background-color: var(--success-color-light);
+  color: var(--white-color);
+  cursor: not-allowed;
+}
+
 /* Meeting History */
 
 .history-btn {
   background-color: var(--accent-color);
   color: var(--white-color);
+}
+
+.history-btn:disabled {
+  background-color: var(--accent-color-light);
+  color: var(--white-color);
+  cursor: not-allowed;
 }
 
 /* ================= EMPTY STATE ================= */
@@ -237,4 +271,9 @@
 
   font-size: 18px;
   opacity: 0.7;
+}
+
+.accordion-item.locked .accordion-header {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
