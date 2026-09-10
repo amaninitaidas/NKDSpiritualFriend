@@ -1621,9 +1621,11 @@ input[type="radio"] {
   background-color: #0056b3;
 }
 
-.custom-checkbox {
-  width: 20px !important;
+.custom-radio {
+  width: 15px !important;
   margin-right: 10px !important;
+  margin-left: 12px !important;
+  margin-top: 3px !important;
 }
 
 .options-ChkBox {
@@ -1930,8 +1932,7 @@ input[type="radio"] {
   cursor: pointer;
   user-select: none;
   margin-top: 0px !important;
-  font-weight: bold;
-  color: #52609a;
+  color: var(--primary-color);
 }
 
 .custom-label-radio-content-custom-box-disabled {
