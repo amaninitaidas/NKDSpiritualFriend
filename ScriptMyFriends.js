@@ -10,6 +10,13 @@ const MEETING_DUE_THRESHOLDS = {
   },
 };
 
+const SCORE_THRESHOLDS = {
+  devotee: {
+    green: 75,
+    yellow: 50,
+  },
+};
+
 async function openSpiritualFriendsWindow() {
   console.log("selectedFacilitator", selectedFacilitator);
   const response = await CALL_API("GET_SPIRITUAL_FRIENDS", {
@@ -67,9 +74,11 @@ function renderDevoteeTable(devotees = []) {
       <tr>
         <th>Name</th>
         <th>Category</th>
-        <th>Last Meeting Date</th>
-        <th>Meeting Due In (Days)</th>
-        <th>Exception Update Date</th>
+        <th>Overall Sadhna Score</th>
+        <th>4 weeks Morning Attendance</th>
+        <th>4 weeks Evening Attendance</th>
+        <th>Meeting Due(Days)</th>
+        <th>Exception Due(Days)</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -80,7 +89,31 @@ function renderDevoteeTable(devotees = []) {
   const tbody = table.querySelector("tbody");
 
   devotees.forEach((devotee) => {
-    const dueClass = getMeetingDueClass("devotee", devotee.dueDays);
+    const dueClass = getDueClass(
+      "devotee",
+      devotee.dueDays,
+      MEETING_DUE_THRESHOLDS,
+    );
+    const scoreClass = getDueClass(
+      "devotee",
+      devotee.dueDays,
+      SCORE_THRESHOLDS,
+    );
+    const mornClass = getDueClass(
+      "devotee",
+      devotee.morningAtt,
+      SCORE_THRESHOLDS,
+    );
+    const evenClass = getDueClass(
+      "devotee",
+      devotee.eveningAtt,
+      SCORE_THRESHOLDS,
+    );
+    const exceptionDueClass = getDueClass(
+      "devotee",
+      devotee.exceptionDueDays,
+      SCORE_THRESHOLDS,
+    );
     const row = document.createElement("tr");
 
     row.innerHTML = `
@@ -92,22 +125,30 @@ function renderDevoteeTable(devotees = []) {
         ${devotee.category || "-"}
       </td>
 
-      <td>
-        ${formatDateFriends(devotee.lastMeetingDate)}
+      <td class="${scoreClass}">
+        ${devotee.score || "-"}
+      </td>
+
+      <td class="${mornClass}">
+        ${devotee.morningAtt || "-"}
+      </td>
+
+      <td class="${evenClass}">
+        ${devotee.eveningAtt || "-"}
       </td>
 
       <td class="${dueClass}">
         ${`${devotee.dueDays}`}
       </td>
 
-      <td>
-        ${formatDateFriends(devotee.exceptionUpdateDate)}
+      <td class="${exceptionDueClass}">
+        ${`${devotee.exceptionDueDays}`}
       </td>
 
       <td class="person-actions">
 
         <button
-          class="people-action-btn view-btn"
+          class="people-action-btn meet-btn"
           onclick="" disabled>
           View Details
         </button>
@@ -119,9 +160,21 @@ function renderDevoteeTable(devotees = []) {
         </button>
 
         <button
-          class="people-action-btn history-btn"
+          class="people-action-btn meet-btn"
           onclick="" disabled>
           Meeting History
+        </button>
+
+        <button
+          class="people-action-btn meet-btn"
+          onclick="" disabled>
+          Update Exceptions
+        </button>
+
+        <button
+          class="people-action-btn meet-btn"
+          onclick="" disabled>
+          Sadhna History
         </button>
 
       </td>
@@ -175,7 +228,11 @@ function renderStudentTable(students = []) {
   const tbody = table.querySelector("tbody");
 
   students.forEach((student) => {
-    const dueClass = getMeetingDueClass("student", student.dueDays);
+    const dueClass = getDueClass(
+      "student",
+      student.dueDays,
+      MEETING_DUE_THRESHOLDS,
+    );
     const row = document.createElement("tr");
 
     row.innerHTML = `
@@ -240,8 +297,8 @@ function renderStudentTable(students = []) {
   container.appendChild(table);
 }
 
-function getMeetingDueClass(type, dueDays) {
-  const thresholds = MEETING_DUE_THRESHOLDS[type];
+function getDueClass(type, dueDays, thresholds) {
+  const thresholds = thresholds[type];
 
   if (!thresholds || dueDays == null) {
     return "meeting-due-red";
