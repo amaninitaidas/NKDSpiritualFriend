@@ -65,9 +65,28 @@ function renderDevoteeTable(devotees = []) {
     return;
   }
 
+  const searchDiv = document.createElement("div");
+  searchDiv.className = "people-search-container";
+
+  searchDiv.innerHTML = `
+  <input
+    type="text"
+    id="devoteeSearch"
+    class="people-search"
+    placeholder="Search devotees..."
+  />
+`;
+  container.appendChild(searchDiv);
+  document
+    .getElementById("devoteeSearch")
+    .addEventListener("input", function () {
+      filterPeopleTable("devotee");
+    });
+
   const table = document.createElement("table");
 
   table.className = "people-table";
+  table.id = "devoteeTable";
 
   table.innerHTML = `
     <thead>
@@ -94,11 +113,7 @@ function renderDevoteeTable(devotees = []) {
       devotee.dueDays,
       MEETING_DUE_THRESHOLDS,
     );
-    const scoreClass = getDueClass(
-      "devotee",
-      devotee.dueDays,
-      SCORE_THRESHOLDS,
-    );
+    const scoreClass = getDueClass("devotee", devotee.score, SCORE_THRESHOLDS);
     const mornClass = getDueClass(
       "devotee",
       devotee.morningAtt,
@@ -121,7 +136,7 @@ function renderDevoteeTable(devotees = []) {
         ${devotee.name || "-"}
       </td>
 
-      <td class="person-name">
+      <td class="category-cell">
         ${devotee.category || "-"}
       </td>
 
@@ -156,25 +171,13 @@ function renderDevoteeTable(devotees = []) {
         <button
           class="people-action-btn meet-btn"
           onclick="meetPersonNow('devotee', '${devotee.id}', '${devotee.name.split("\n")[0]}')">
-          Meet Now
+          Meetings
         </button>
 
         <button
           class="people-action-btn meet-btn"
           onclick="" disabled>
-          Meeting History
-        </button>
-
-        <button
-          class="people-action-btn meet-btn"
-          onclick="" disabled>
-          Update Exceptions
-        </button>
-
-        <button
-          class="people-action-btn meet-btn"
-          onclick="" disabled>
-          Sadhna History
+          Spiritual Progress
         </button>
 
       </td>
@@ -205,18 +208,35 @@ function renderStudentTable(students = []) {
     return;
   }
 
+  const searchDiv = document.createElement("div");
+  searchDiv.className = "people-search-container";
+
+  searchDiv.innerHTML = `
+  <input
+    type="text"
+    id="studentSearch"
+    class="people-search"
+    placeholder="Search students..."
+  />
+`;
+  container.appendChild(searchDiv);
+  document
+    .getElementById("studentSearch")
+    .addEventListener("input", function () {
+      filterPeopleTable("student");
+    });
+
   const table = document.createElement("table");
 
   table.className = "people-table";
+  table.id = "studentTable";
 
   table.innerHTML = `
     <thead>
       <tr>
         <th>Name</th>
         <th>Category</th>
-        <th>Last Weekly Meeting Date</th>
         <th>Weekly Meeting Due In (Days)</th>
-        <th>Last Meeting Date</th>
         <th>Meeting Due In (Days)</th>
         <th>Actions</th>
       </tr>
@@ -240,21 +260,13 @@ function renderStudentTable(students = []) {
         ${student.name || "-"}
       </td>
 
-      <td class="person-name">
+      <td class="category-cell">
         ${student.category || "-"}
-      </td>
-
-      <td>
-        ${formatDateFriends(student.lastWeeklyMeetingDate)}
       </td>
 
       <td class="${dueClass}">
           ${student.weeklyDueDays} 
     </td>
-
-      <td>
-        ${formatDateFriends(student.lastMeetingDate)}
-      </td>
 
       <td class="${dueClass}">
           ${student.dueDays} 
@@ -263,7 +275,7 @@ function renderStudentTable(students = []) {
       <td class="person-actions">
 
         <button
-          class="people-action-btn view-btn"
+          class="people-action-btn meet-btn"
           onclick="viewPersonDetails('student', '${student.id}', '${student.name.split("\n")[0]}')" disabled>
           View Details
         </button>
@@ -276,16 +288,16 @@ function renderStudentTable(students = []) {
 
         <button
             type="button"
-            class="people-action-btn weekly-btn"
+            class="people-action-btn meet-btn"
             onclick="weeklyMeetingNow('${student.id}', '${student.name.split("\n")[0]}')" disabled
             >
             Weekly Meeting
         </button>
 
         <button
-          class="people-action-btn history-btn"
+          class="people-action-btn meet-btn"
           onclick="viewMeetingHistory('student', '${student.id}')" disabled>
-          Meeting History
+          Behaviour Inputs
         </button>
 
       </td>
@@ -297,18 +309,18 @@ function renderStudentTable(students = []) {
   container.appendChild(table);
 }
 
-function getDueClass(type, dueDays, thresholds) {
-  const thresholds = thresholds[type];
+function getDueClass(type, dueDays, inputThresholds) {
+  const thresholds = inputThresholds[type];
 
   if (!thresholds || dueDays == null) {
     return "meeting-due-red";
   }
 
-  if (dueDays > thresholds.green) {
+  if (dueDays >= thresholds.green) {
     return "meeting-due-green";
   }
 
-  if (dueDays > thresholds.yellow) {
+  if (dueDays >= thresholds.yellow) {
     return "meeting-due-yellow";
   }
 
@@ -330,5 +342,27 @@ function formatDateFriends(dateValue) {
     day: "2-digit",
     month: "short",
     year: "numeric",
+  });
+}
+
+function filterPeopleTable(type) {
+  const searchInput = document.getElementById(
+    type === "devotee" ? "devoteeSearch" : "studentSearch",
+  );
+
+  const table = document.getElementById(
+    type === "devotee" ? "devoteeTable" : "studentTable",
+  );
+
+  console.log("searchInput", searchInput, "table", table);
+
+  if (!searchInput || !table) return;
+
+  const searchText = searchInput.value.trim().toLowerCase();
+
+  table.querySelectorAll("tbody tr").forEach((row) => {
+    row.style.display = row.innerText.toLowerCase().includes(searchText)
+      ? ""
+      : "none";
   });
 }

@@ -5,13 +5,13 @@
   --primary-color-light: #74bcff;
   --secondary-color: #3f77bb;
   --tertiary-color: #556192;
-  --tertiary-color-light: #7b8dd1;
+  --tertiary-color-light: #7a83ad;
 
   --success-color: #4caf50;
   --success-color-light: #a5d6a7;
   --accent-color: #d5952a;
   --accent-color-light: #f1be71;
-  --danger-color: #e6324d;
+  --danger-color: #af132b;
 
   /* UI */
 
@@ -22,31 +22,49 @@
   --border-color: #d8e2ec;
 }
 
+.people-table td.person-name {
+  color: var(--text-color) !important;
+  width: 12%;
+}
+
+.people-table td.category-cell {
+  color: var(--text-color);
+  width: 7%;
+}
+
 .people-table td {
   padding: 13px 15px;
   color: var(--text-color);
-  font-size: 16px;
+  font-size: 15px;
   text-align: center;
   border-bottom: 1px solid black;
   vertical-align: middle;
+  overflow-wrap: break-word;
+  width: 15%;
 }
 
 .people-table td.meeting-due-green {
   background-color: var(--success-color);
   color: var(--white-color);
   font-weight: bold;
+  font-size: 18px;
+  width: 8%;
 }
 
 .people-table td.meeting-due-yellow {
   background-color: var(--accent-color);
   color: var(--white-color);
   font-weight: bold;
+  font-size: 18px;
+  width: 8%;
 }
 
 .people-table td.meeting-due-red {
   background-color: var(--danger-color);
   color: var(--white-color);
   font-weight: bold;
+  font-size: 18px;
+  width: 8%;
 }
 
 .last-meeting-date {
@@ -152,7 +170,7 @@
 
   color: var(--white-color);
 
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 600;
 
   text-align: center;
@@ -166,22 +184,14 @@
   background-color: var(--border-color);
 }
 
-/* ================= NAME ================= */
-
-.person-name {
-  font-weight: 600;
-  color: var(--primary-color) !important;
-}
-
 .person-actions {
-  display: flex;
-  flex-direction: column;
   align-items: center;
   gap: 6px;
+  width: 500px;
 }
 
 .person-actions .people-action-btn {
-  width: 140px;
+  width: 100%;
   height: 40px;
 
   display: inline-flex !important;
@@ -237,12 +247,12 @@
 /* Meet Now */
 
 .meet-btn {
-  background-color: var(--success-color);
+  background-color: var(--tertiary-color);
   color: var(--white-color);
 }
 
 .meet-btn:disabled {
-  background-color: var(--success-color-light);
+  background-color: var(--tertiary-color-light);
   color: var(--white-color);
   cursor: not-allowed;
 }
@@ -276,4 +286,28 @@
 .accordion-item.locked .accordion-header {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.table-heading-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1px;
+  background-color: var(--background-color);
+}
+
+.people-table-container div.people-search-container {
+  background-color: var(--background-color);
+}
+
+.people-table-container input.people-search {
+  padding: 9px 12px;
+  border: 1px solid black;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.people-search:focus {
+  outline: none;
+  border-color: var(--primary-color);
 }
