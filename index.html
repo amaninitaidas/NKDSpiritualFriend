@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="favicon.png" />
-    <title>Gaurang Gurukul Student's App</title>
+    <title>NKD Spiritual Friends App</title>
 
     <link rel="stylesheet" href="StylesCommon.css" />
     <link rel="stylesheet" href="StylesSpecific.css" />
@@ -360,10 +360,7 @@
           <h3 id="meetingHistoryHeader"></h3>
           <br />
 
-          <div
-            id="meetingHistoryTableContainer"
-            class="associated-section people-table-container"
-          ></div>
+          <div id="meetingHistoryContainer"></div>
 
           <div class="button-row">
             <button class="red" onclick="SHOW_SPECIFIC_DIV('myFriendsPopup')">
@@ -380,20 +377,25 @@
      MEETING DETAILS POPUP
 ===================================================== -->
 
-      <div class="popup" id="meetingDetailsPopup">
-        <div class="popup-content scrollable-content">
+      <div id="meetingDetailsPopup" class="popup">
+        <div class="popup-content">
           <img
             src="https://drive.google.com/thumbnail?id=1aYobBIvFM5yJUgqLktnHjzwxuFX0OfGn&sz=w500"
             alt="NKD Logo"
           />
 
-          <div class="user-info-block">
-            <p id="meetingDetailsHeading_lbl"></p>
+          <div>
+            <p class="user-info-block"></p>
           </div>
+
+          <br />
+          <h3 id="meetingHistoryHeader2"></h3>
+          <br />
 
           <div id="meetingDetailsContainer"></div>
 
           <button
+            type="button"
             class="red"
             onclick="SHOW_SPECIFIC_DIV('meetingHistoryPopup')"
           >

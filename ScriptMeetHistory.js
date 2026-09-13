@@ -5,195 +5,407 @@ let meetingHistoryPersonType = null;
 async function openMeetingHistory(
   personType,
   personName,
-  personeSystemName,
+  personSystemName,
   personId,
 ) {
   meetingHistoryPerson = {
     name: personName,
-    systemName: personeSystemName,
+    systemName: personSystemName,
     id: personId,
   };
   meetingHistoryPersonType = personType;
 
   const heading = document.getElementById("meetingHistoryHeader");
+  const heading2 = document.getElementById("meetingHistoryHeader2");
 
   if (heading) {
     heading.innerText = `Meeting History - ${meetingHistoryPerson.name}`;
   }
 
-  //   const response = await CALL_API("GET_MEETING_HISTORY", {
-  //     name: meetingHistoryPerson.systemName,
-  //     type: meetingHistoryPersonType,
-  //   });
+  heading2.innerText = `Meeting History - ${meetingHistoryPerson.name}`;
 
-  //   if (response?.status !== "success" || !response.data) {
-  //     SHOW_ERROR_POPUP("Error fetching meeting history.");
+  const response = await CALL_API("GET_MEETING_HISTORY", {
+    systemName: personSystemName,
+    personType: personType,
+  });
 
-  //     return;
-  //   }
+  if (response?.status !== "success" || !response.data) {
+    SHOW_ERROR_POPUP(
+      "Error fetching meeting history.\n\n" +
+        (response?.error || "Unknown error"),
+    );
+    return;
+  }
 
-  //   meetingHistoryData = Array.isArray(response.data) ? response.data : [];
-
-  meetingHistoryData = [];
-
-  renderMeetingHistory(meetingHistoryData);
+  renderMeetingHistory(personType, response.data);
 
   const meetNowButton = document.getElementById("meetingHistoryMeetNowBtn");
 
   if (meetNowButton) {
     meetNowButton.onclick = () => {
-      meetPersonNow(personType, personId, personName.split("\n")[0]);
+      meetPersonNow(
+        personType,
+        personId,
+        personName.split("\n")[0],
+        personSystemName,
+      );
     };
   }
 
   SHOW_SPECIFIC_DIV("meetingHistoryPopup");
 }
 
-function renderMeetingHistory(history = []) {
-  const container = document.getElementById("meetingHistoryTableContainer");
+function renderMeetingHistory(personType, historyData) {
+  const container = document.getElementById("meetingHistoryContainer");
+
+  container.innerHTML = "";
+
+  Object.entries(historyData).forEach(([meetingGroup, meetings]) => {
+    meetings = meetings || [];
+
+    // Convert API key to config meeting type
+    const meetingType =
+      meetingGroup === "Weekly Meetings"
+        ? "weekly"
+        : meetingGroup === "Monthly Meetings"
+          ? "monthly"
+          : null;
+
+    if (!meetingType) {
+      return;
+    }
+
+    // =====================================================
+    // CREATE ASSOCIATED SECTION
+    // =====================================================
+
+    const section = document.createElement("div");
+
+    section.className = "associated-section";
+
+    // =====================================================
+    // SECTION HEADER
+    // =====================================================
+
+    const sectionHeader = document.createElement("div");
+
+    sectionHeader.className = "associated-section-header";
+
+    const heading = document.createElement("h3");
+
+    heading.textContent = meetingGroup;
+
+    const count = document.createElement("span");
+
+    count.className = "people-count";
+
+    count.textContent = meetings.length;
+
+    sectionHeader.appendChild(heading);
+    sectionHeader.appendChild(count);
+
+    // =====================================================
+    // TABLE CONTAINER
+    // =====================================================
+
+    const tableContainer = document.createElement("div");
+
+    tableContainer.className = "people-table-container";
+
+    // =====================================================
+    // NO MEETINGS
+    // =====================================================
+
+    if (meetings.length === 0) {
+      const noMeetings = document.createElement("div");
+
+      noMeetings.className = "no-people-message";
+
+      noMeetings.textContent = `No ${meetingType} Meetings found`;
+
+      tableContainer.appendChild(noMeetings);
+    } else {
+      // ===================================================
+      // SORT - NEWEST FIRST
+      // ===================================================
+
+      const sortedMeetings = [...meetings].sort((a, b) =>
+        (b.meetingDate || "").localeCompare(a.meetingDate || ""),
+      );
+
+      // ===================================================
+      // CREATE TABLE
+      // ===================================================
+
+      const table = document.createElement("table");
+
+      table.className = "people-table";
+
+      table.innerHTML = `
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Place</th>
+              <th>Facilitator</th>
+              <th>Feedback</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody></tbody>
+        `;
+
+      const tbody = table.querySelector("tbody");
+
+      // ===================================================
+      // POPULATE TABLE
+      // ===================================================
+
+      sortedMeetings.forEach((meeting) => {
+        const groupedSections = groupHistorySections(
+          personType,
+          meetingType,
+          meeting.sections || {},
+        );
+
+        // Store grouped data for details view
+        meeting.groupedSections = groupedSections;
+
+        const row = document.createElement("tr");
+
+        const feedback = meeting.sections?.["Please give your comments"] || "-";
+
+        row.innerHTML = `
+    <td class="person-name">
+      ${formatMeetingDate(meeting.meetingDate)}
+    </td>
+
+    <td class="person-name">
+      ${meeting.place || "-"}
+    </td>
+
+    <td class="person-name">
+      ${meeting.facilitator || "-"}
+    </td>
+
+    <td class="feedback-column">
+  <div class="history-feedback-wrapper">
+
+    <div class="history-feedback-text">
+      ${feedback}
+    </div>
+
+    <button
+      type="button"
+      class="history-feedback-toggle"
+      aria-label="Expand feedback">
+      ▼
+    </button>
+
+  </div>
+</td>
+    </td>
+
+    <td class="person-actions">
+      <button
+        class="people-action-btn view-btn-history"
+        type="button">
+        View
+      </button>
+    </td>
+  `;
+
+        const feedbackWrapper = row.querySelector(".history-feedback-wrapper");
+
+        const feedbackText = row.querySelector(".history-feedback-text");
+
+        const feedbackToggle = row.querySelector(".history-feedback-toggle");
+
+        requestAnimationFrame(() => {
+          if (feedbackText.scrollHeight > feedbackText.clientHeight + 1) {
+            feedbackToggle.classList.add("show");
+          }
+        });
+
+        feedbackToggle.onclick = () => {
+          const expanded = feedbackWrapper.classList.toggle("expanded");
+
+          feedbackToggle.textContent = expanded ? "▲" : "▼";
+        };
+
+        // =====================================================
+        // VIEW MEETING
+        // =====================================================
+
+        row.querySelector(".view-btn-history").onclick = () => {
+          showMeetingDetails(personType, meetingType, meeting);
+        };
+
+        tbody.appendChild(row);
+      });
+
+      tableContainer.appendChild(table);
+    }
+
+    // =====================================================
+    // BUILD SECTION
+    // =====================================================
+
+    section.appendChild(sectionHeader);
+    section.appendChild(tableContainer);
+
+    container.appendChild(section);
+  });
+}
+
+function showMeetingDetails(personType, meetingType, meeting) {
+  const container = document.getElementById("meetingDetailsContainer");
 
   if (!container) {
+    console.error("meetingDetailsContainer not found.");
     return;
   }
 
   container.innerHTML = "";
 
-  if (history.length === 0) {
-    container.innerHTML = `
-      <div class="no-people-message">
-        No previous meetings found.
-      </div>
-    `;
+  // =====================================================
+  // MEETING INFORMATION
+  // =====================================================
 
-    return;
-  }
+  const infoDiv = document.createElement("div");
 
-  const table = document.createElement("table");
+  infoDiv.className = "meeting-details-info";
 
-  table.className = "people-table meeting-history-table";
+  infoDiv.innerHTML = `
+    <div>
+      <strong>Date: </strong>
+      ${formatMeetingDate(meeting.meetingDate)}
+    </div>
 
-  const thead = document.createElement("thead");
+    <div>
+      <strong>Meeting Type: </strong>
+      ${meeting.meetingType || meetingType}
+    </div>
 
-  thead.innerHTML = `
-    <tr>
-      <th>Date</th>
-      <th>Meeting Type</th>
-      <th>Place</th>
-      <th>Feedback</th>
-      <th>Actions</th>
-    </tr>
+    <div>
+      <strong>Place: </strong>
+      ${meeting.place || "-"}
+    </div>
+
+    <div>
+      <strong>Facilitator: </strong>
+      ${meeting.facilitator || "-"}
+    </div>
   `;
 
-  table.appendChild(thead);
+  container.appendChild(infoDiv);
 
-  const tbody = document.createElement("tbody");
+  // =====================================================
+  // SECTIONS
+  // =====================================================
 
-  history.forEach((meeting, index) => {
-    const row = document.createElement("tr");
+  const groupedSections =
+    meeting.groupedSections ||
+    groupHistorySections(personType, meetingType, meeting.sections || {});
 
-    // Date
-    const dateCell = document.createElement("td");
+  Object.entries(groupedSections).forEach(
+    ([sectionTitle, fields], sectionIndex) => {
+      const accordionItem = document.createElement("div");
 
-    dateCell.textContent = meeting.meetingDate || "-";
+      accordionItem.className = "accordion-item";
 
-    // Type
-    const typeCell = document.createElement("td");
+      // ===================================================
+      // HEADER
+      // ===================================================
 
-    typeCell.textContent = meeting.meetingType || "-";
+      const header = document.createElement("button");
 
-    // Place
-    const placeCell = document.createElement("td");
+      header.type = "button";
+      header.className = "accordion-header";
 
-    placeCell.textContent = meeting.place || "-";
+      header.innerHTML = `
+        ${sectionTitle}
+        <span class="icon">▶</span>
+      `;
 
-    // =================================================
-    // FEEDBACK
-    // =================================================
+      // ===================================================
+      // CONTENT
+      // ===================================================
 
-    const feedbackCell = document.createElement("td");
+      const content = document.createElement("div");
 
-    feedbackCell.className = "meeting-feedback";
+      content.className = "accordion-content";
 
-    const feedbackText = document.createElement("div");
+      Object.entries(fields).forEach(([fieldName, answer]) => {
+        const fieldDiv = document.createElement("div");
 
-    feedbackText.className = "feedback-text";
+        fieldDiv.className = "meeting-detail-field";
 
-    feedbackText.textContent = meeting.feedback || "-";
+        const fieldHeading = document.createElement("div");
 
-    feedbackCell.appendChild(feedbackText);
+        fieldHeading.className = "meeting-detail-field-heading";
 
-    if (meeting.feedback && meeting.feedback.trim() !== "") {
-      const expandButton = document.createElement("button");
+        fieldHeading.textContent = fieldName;
 
-      expandButton.type = "button";
+        const answerDiv = document.createElement("div");
 
-      expandButton.className = "feedback-expand-btn";
+        answerDiv.className = "meeting-detail-answer";
 
-      expandButton.innerHTML = "▼";
+        answerDiv.textContent = answer || "-";
 
-      expandButton.onclick = () => {
-        const expanded = feedbackText.classList.toggle("expanded");
+        fieldDiv.appendChild(fieldHeading);
 
-        expandButton.innerHTML = expanded ? "▲" : "▼";
-      };
+        fieldDiv.appendChild(answerDiv);
 
-      feedbackCell.appendChild(expandButton);
-    }
+        content.appendChild(fieldDiv);
+      });
 
-    // =================================================
-    // ACTIONS
-    // =================================================
+      // ===================================================
+      // ACCORDION CLICK
+      // ===================================================
 
-    const actionsCell = document.createElement("td");
+      header.addEventListener("click", () => {
+        const isOpen = header.classList.contains("active");
 
-    actionsCell.className = "people-actions";
+        // Close all accordions
+        container
+          .querySelectorAll(".accordion-header")
+          .forEach((otherHeader) => {
+            otherHeader.classList.remove("active");
 
-    const viewButton = document.createElement("button");
+            otherHeader.nextElementSibling?.classList.remove("show");
+          });
 
-    viewButton.className = "view-btn";
+        // Open clicked accordion
+        if (!isOpen) {
+          header.classList.add("active");
 
-    viewButton.textContent = "View";
+          content.classList.add("show");
+        }
+      });
 
-    viewButton.onclick = () => {
-      viewMeetingDetails(index);
-    };
+      accordionItem.appendChild(header);
+      accordionItem.appendChild(content);
 
-    actionsCell.appendChild(viewButton);
+      container.appendChild(accordionItem);
+    },
+  );
 
-    // =================================================
-    // ROW
-    // =================================================
+  // =====================================================
+  // OPEN FIRST ACCORDION
+  // =====================================================
 
-    row.appendChild(dateCell);
-    row.appendChild(typeCell);
-    row.appendChild(placeCell);
-    row.appendChild(feedbackCell);
-    row.appendChild(actionsCell);
+  const firstHeader = container.querySelector(".accordion-header");
 
-    tbody.appendChild(row);
-  });
+  if (firstHeader) {
+    firstHeader.classList.add("active");
 
-  table.appendChild(tbody);
-
-  container.appendChild(table);
-}
-
-function viewMeetingDetails(index) {
-  const meeting = meetingHistoryData[index];
-
-  if (!meeting) {
-    return;
+    firstHeader.nextElementSibling?.classList.add("show");
   }
 
-  const heading = document.getElementById("meetingDetailsHeading_lbl");
-
-  if (heading) {
-    heading.innerText = `${meeting.meetingType || "Meeting"} - ${
-      meeting.meetingDate || ""
-    }`;
-  }
-
-  renderMeetingDetails(meeting, meetingHistoryPersonType);
+  // =====================================================
+  // OPEN DETAILS POPUP/DIV
+  // =====================================================
 
   SHOW_SPECIFIC_DIV("meetingDetailsPopup");
 }
@@ -305,5 +517,62 @@ function renderMeetingDetails(meeting, personType) {
 
       content.classList.toggle("show");
     });
+  });
+}
+
+function getSectionTitleFromFieldKey(personType, meetingType, fieldKey) {
+  const config = meetingFormConfig[personType]?.[meetingType];
+
+  if (!config) {
+    return fieldKey;
+  }
+
+  for (const section of config.sections) {
+    for (const field of section.fields) {
+      // Field may contain <br/><br/>
+      // so only take the first part
+      const fieldName = field.split("<br/><br/>")[0].trim();
+
+      if (fieldName === fieldKey) {
+        return section.title;
+      }
+    }
+  }
+
+  // No matching field found
+  return fieldKey;
+}
+
+function groupHistorySections(personType, meetingType, sections) {
+  const grouped = {};
+
+  Object.entries(sections).forEach(([fieldKey, answer]) => {
+    const sectionTitle = getSectionTitleFromFieldKey(
+      personType,
+      meetingType,
+      fieldKey,
+    );
+
+    if (!grouped[sectionTitle]) {
+      grouped[sectionTitle] = {};
+    }
+
+    grouped[sectionTitle][fieldKey] = answer;
+  });
+
+  return grouped;
+}
+
+function formatMeetingDate(dateString) {
+  if (!dateString) return "-";
+
+  const [year, month, day] = dateString.split("/");
+
+  const date = new Date(Number(year), Number(month) - 1, Number(day));
+
+  return date.toLocaleDateString("en-IN", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
   });
 }

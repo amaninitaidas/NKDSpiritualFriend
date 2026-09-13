@@ -469,13 +469,14 @@ function toggleMeetingSection(header) {
   }
 }
 
-function meetPersonNow(type, personId, personName) {
+function meetPersonNow(type, personId, personName, personSystemName) {
   cleanMeetingForm();
   // Store current meeting person
   currentMeetingPerson = {
     type: type,
     id: personId,
     name: personName,
+    systemName: personSystemName,
   };
 
   // Set heading
@@ -666,8 +667,10 @@ async function saveMeeting() {
 
   const response = await CALL_API("SAVE_MEETING", {
     personId: currentMeetingPerson.id,
+    systemName: currentMeetingPerson.systemName,
     personType: currentMeetingPerson.type,
     meetingData: meetingData,
+    facName: selectedFacilitator.name,
   });
 
   if (response?.status === "success" && response.data) {
@@ -675,10 +678,11 @@ async function saveMeeting() {
       SHOW_ERROR_POPUP(`${response.data}`);
       return;
     }
-    SHOW_SUCCESS_POPUP("Meeting data saved successfully.");
-    resetMeetingForm();
-    openSpiritualFriendsWindow();
+    SHOW_SUCCESS_POPUP("Meeting data saved successfully.", () => {
+      resetMeetingForm();
+      openSpiritualFriendsWindow();
+    });
   } else {
-    SHOW_ERROR_POPUP("Error saving meeting data.");
+    SHOW_ERROR_POPUP("Error saving meeting data\n\n" + response.error);
   }
 }

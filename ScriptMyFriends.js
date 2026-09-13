@@ -248,6 +248,11 @@ function renderStudentTable(students = []) {
       student.dueDays,
       MEETING_DUE_THRESHOLDS,
     );
+    const weeklyDueClass = getDueClass(
+      "student",
+      student.weeklyDueDays,
+      MEETING_DUE_THRESHOLDS,
+    );
     const row = document.createElement("tr");
 
     row.innerHTML = `
@@ -259,7 +264,7 @@ function renderStudentTable(students = []) {
         ${student.category || "-"}
       </td>
 
-      <td class="${dueClass}">
+      <td class="${weeklyDueClass}">
           ${student.weeklyDueDays} 
     </td>
 

@@ -27,6 +27,11 @@
   width: 12%;
 }
 
+.people-table td.feedback-column {
+  color: var(--text-color) !important;
+  width: 18%;
+}
+
 .people-table td.category-cell {
   color: var(--text-color);
   width: 7%;
@@ -252,6 +257,11 @@
   color: var(--white-color);
 }
 
+.view-btn-history {
+  background-color: var(--tertiary-color);
+  color: var(--white-color);
+}
+
 .meet-btn:disabled {
   background-color: var(--tertiary-color-light);
   color: var(--white-color);
@@ -317,78 +327,6 @@
 }
 
 /* =====================================================
-   MEETING HISTORY
-===================================================== */
-
-.meeting-history-table {
-  width: 100%;
-}
-
-.meeting-history-table td {
-  vertical-align: middle;
-}
-
-/* =====================================================
-   FEEDBACK
-===================================================== */
-
-.meeting-feedback {
-  max-width: 300px;
-  text-align: left !important;
-  vertical-align: top !important;
-}
-
-.feedback-text {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
-  overflow: hidden;
-
-  white-space: normal;
-  overflow-wrap: anywhere;
-
-  line-height: 1.4;
-}
-
-.feedback-text.expanded {
-  display: block;
-}
-
-.feedback-expand-btn {
-  border: none;
-  background: transparent;
-
-  color: var(--primary-color);
-
-  cursor: pointer;
-
-  font-size: 14px;
-
-  padding: 3px 5px;
-
-  margin-top: 3px;
-}
-
-.feedback-expand-btn:hover {
-  background: transparent;
-}
-
-/* =====================================================
-   HISTORY ACTIONS
-===================================================== */
-
-.meeting-history-actions {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-
-  margin-top: 20px;
-  padding-top: 15px;
-
-  border-top: 1px solid #ccc;
-}
-
-/* =====================================================
    MEETING DETAILS
 ===================================================== */
 
@@ -411,6 +349,11 @@
   margin-bottom: 15px;
 }
 
+.meeting-detail-field-heading {
+  color: var(--primary-color);
+  font-size: 17px;
+}
+
 .meeting-detail-label {
   font-weight: bold;
   margin-bottom: 5px;
@@ -426,4 +369,57 @@
 
   white-space: pre-wrap;
   overflow-wrap: anywhere;
+  margin-top: 10px;
+}
+
+.history-feedback-wrapper {
+  position: relative;
+  width: 100%;
+  line-height: 1.4;
+}
+
+.history-feedback-text {
+  line-height: 1.4;
+
+  /* 4 lines */
+  max-height: calc(1.4em * 4);
+
+  overflow: hidden;
+  word-break: break-word;
+
+  padding-right: 2px;
+}
+
+/* Arrow */
+.history-feedback-toggle {
+  display: none;
+
+  position: absolute;
+  right: 0;
+  bottom: 0;
+
+  border: none;
+  background: var(--border-color);
+
+  padding: 0;
+  margin: 0;
+
+  width: 16px;
+  height: 20px;
+
+  font-size: 11px;
+  line-height: 20px;
+
+  cursor: pointer;
+}
+
+.history-feedback-toggle.show {
+  display: block;
+}
+
+/* Expanded */
+.history-feedback-wrapper.expanded .history-feedback-text {
+  max-height: none;
+  overflow: visible;
+  padding-right: 0;
 }
