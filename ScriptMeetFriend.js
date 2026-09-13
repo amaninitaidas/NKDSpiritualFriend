@@ -1,138 +1,283 @@
 const meetingFormConfig = {
   devotee: {
-    meetingPlace: {
-      label: "Place of Meeting",
-      options: ["My Home", "Spiritual Friend's Home", "Online"],
+    monthly: {
+      meetingPlace: {
+        label: "Place of Meeting",
+        options: ["My Home", "Spiritual Friend's Home", "Online"],
+      },
+      sections: [
+        {
+          title: "साधना (Sadhna)",
+          fields: [
+            "ग्रन्थ पठन (Book Reading)<br/><br/>आप श्रील प्रभुपद की कौनसी पुस्तक पढ़ रहे हैं? (Which book of Srila Prabhupada you are reading?)",
+            "श्रवण (Hearing)<br/><br/>आप कौन से प्रवचन सुन रहे हैं? (Which lectures are you listening?)",
+            "जप की गुणवत्ता (Chanting Quality)<br/><br/>क्या आपका जप सुबह 9 बजे से पहले हो जाता है? क्या आप एक जगह बैठ कर जप करते हैं? क्या आपको जप में झपकी आती है? (Are you able to complete chanting before 9 AM? Are you able to complete chanting sitting at one place? Do you feel sleepy while chanting?)",
+          ],
+        },
+        {
+          title: "सेवा (Sewa)",
+          fields: [
+            "नियमित सेवा (Regular Sewa)<br/><br/>क्या आपके पास नियमित सेवा है? कृपया अपनी सेवा के बारे में बताएं (Do you have Regular service? Please mention which service you are doing)",
+            "सेवा से संतुष्टि (Satisfaction with service)<br/><br/>क्या आप अपनी सेवा से संतुष्ट हैं या उसे बदलना चाहते हैं? (Are you feeling happy and motivated doing service - Do you want to change your service)",
+            "सेवा प्रभंधक (Sewa Coordinator)<br/><br/>क्या आपका सेवा प्रबंधक से निरंतर संपर्क होता है या कोई समस्या आ रही है? (Do you have regular discussions with service coordinator and any problems in dealing with them)",
+          ],
+        },
+        {
+          title: "अनुभूति (Realisation)",
+          fields: [
+            "अनर्थ निवृत्ति में संघर्ष (Challenges in Dealing with Anarthas)<br/><br/>क्या आपको इन्द्रियों को नियंत्रित करने में या वेगों(जिह्वा, उदर, उपस्थ, वाचो, मन तथा क्रोध) को नियंत्रित करने में कोई संघर्ष महसूस होता है (Do you face any challenge in controlling any of your senses or vega (jihva, udar, upasth, vacho, mansa, krodh))",
+            "कृतज्ञता (Gratitude)<br/><br/>क्या आप कुछ ऐसा बताना चाहते जो यहाँ आपको अच्छा लगा हो या दिल को छुआ हो? Do you want to share anything which has touched your heart?",
+          ],
+        },
+        {
+          title: "भक्तों से सम्बन्ध (Relationship with devotees)",
+          fields: [
+            "भक्तों से मधुर सम्बन्ध (Good Relationship with devotees)<br/><br/>किन भक्त के साथ आपका मधुर सम्बन्ध है? उनके नाम बताइये और इस सम्बन्ध को बनाये रखने के लिए आप क्या करेंगे? (With whom do you have good relationship and what are you doing to maintain it )",
+            "सम्बन्ध में सुधार (Where Relationship can be Better)<br/><br/>किन भक्तों से सम्बन्ध सुधर सकते हैं? उनके नाम बताईये | आप सम्बन्ध सुधारने के लिए क्या करेंगे, बताइये (With whom you do not have a good relationship and what will/can you do to make it better)",
+          ],
+        },
+        {
+          title: "समूह में सुधार के विषय (Observations and Suggestions)",
+          fields: [
+            "क्या समूह में सुधारने के लिए आपका कोई सुझाव है (Any improvement area in congregation or anything which is not right)",
+            "कोई और अन्य विषय अथवा टिपण्णी ?(Do you have any other inputs or challenges or issues or problems)",
+          ],
+        },
+        {
+          title: "Action and Feedback",
+          fields: [
+            "पिछली मीटिंग में मिली टिप्पणियों पर भक्त की कार्यवाही (Devotee's actions on previous meeting inputs)",
+            "अपने सुझाव लिखें (Please give your comments)",
+          ],
+        },
+      ],
     },
-    sections: [
-      {
-        title: "Meeting Place",
-        fields: [
-          "ग्रन्थ पठन (Book Reading)<br/><br/>आप श्रील प्रभुपद की कौनसी पुस्तक पढ़ रहे हैं? (Which book of Srila Prabhupada you are reading?)",
-          "श्रवण (Hearing)<br/><br/>आप कौन से प्रवचन सुन रहे हैं? (Which lectures are you listening?)",
-          "जप की गुणवत्ता (Chanting Quality)<br/><br/>क्या आपका जप सुबह 9 बजे से पहले हो जाता है? क्या आप एक जगह बैठ कर जप करते हैं? क्या आपको जप में झपकी आती है? (Are you able to complete chanting before 9 AM? Are you able to complete chanting sitting at one place? Do you feel sleepy while chanting?)",
-        ],
-      },
-      {
-        title: "साधना (Sadhna)",
-        fields: [
-          "ग्रन्थ पठन (Book Reading)<br/><br/>आप श्रील प्रभुपद की कौनसी पुस्तक पढ़ रहे हैं? (Which book of Srila Prabhupada you are reading?)",
-          "श्रवण (Hearing)<br/><br/>आप कौन से प्रवचन सुन रहे हैं? (Which lectures are you listening?)",
-          "जप की गुणवत्ता (Chanting Quality)<br/><br/>क्या आपका जप सुबह 9 बजे से पहले हो जाता है? क्या आप एक जगह बैठ कर जप करते हैं? क्या आपको जप में झपकी आती है? (Are you able to complete chanting before 9 AM? Are you able to complete chanting sitting at one place? Do you feel sleepy while chanting?)",
-        ],
-      },
-      {
-        title: "सेवा (Sewa)",
-        fields: [
-          "नियमित सेवा (Regular Sewa)<br/><br/>क्या आपके पास नियमित सेवा है? कृपया अपनी सेवा के बारे में बताएं (Do you have Regular service? Please mention which service you are doing)",
-          "सेवा से संतुष्टि (Satisfaction with service)<br/><br/>क्या आप अपनी सेवा से संतुष्ट हैं या उसे बदलना चाहते हैं? (Are you feeling happy and motivated doing service - Do you want to change your service)",
-          "सेवा प्रभंधक (Sewa Coordinator)<br/><br/>क्या आपका सेवा प्रबंधक से निरंतर संपर्क होता है या कोई समस्या आ रही है? (Do you have regular discussions with service coordinator and any problems in dealing with them)",
-        ],
-      },
-      {
-        title: "अनुभूति (Realisation)",
-        fields: [
-          "कृतज्ञता (Gratitude)<br/><br/>क्या आप कुछ ऐसा बताना चाहते जो यहाँ आपको अच्छा लगा हो या दिल को छुआ हो? Do you want to share anything which has touched your heart?",
-          "अनर्थ निवृत्ति में संघर्ष (Challenges in Dealing with Anarthas)<br/><br/>क्या आपको इन्द्रियों को नियंत्रित करने में या वेगों(जिह्वा, उदर, उपस्थ, वाचो, मन तथा क्रोध) को नियंत्रित करने में कोई संघर्ष महसूस होता है (Do you face any challenge in controlling any of your senses or vega (jihva, udar, upasth, vacho, mansa, krodh))",
-        ],
-      },
-      {
-        title: "भक्तों से सम्बन्ध (Relationship with devotees)",
-        fields: [
-          "भक्तों से मधुर सम्बन्ध (Good Relationship with devotees)<br/><br/>किन भक्त के साथ आपका मधुर सम्बन्ध है? उनके नाम बताइये और इस सम्बन्ध को बनाये रखने के लिए आप क्या करेंगे? (With whom do you have good relationship and what are you doing to maintain it )",
-          "सम्बन्ध में सुधार (Where Relationship can be Better)<br/><br/>किन भक्तों से सम्बन्ध सुधर सकते हैं? उनके नाम बताईये | आप सम्बन्ध सुधारने के लिए क्या करेंगे, बताइये (With whom you do not have a good relationship and what will/can you do to make it better)",
-        ],
-      },
-      {
-        title: "समूह में सुधार के विषय (Observations and Suggestions)",
-        fields: [
-          "क्या समूह में सुधारने के लिए आपका कोई सुझाव है (Any improvement area in congregation or anything which is not right)",
-          "कोई और अन्य विषय अथवा टिपण्णी ?(Do you have any other inputs or challenges or issues or problems)",
-        ],
-      },
-      {
-        title: "Action and Feedback",
-        fields: [
-          "पिछली मीटिंग में मिली टिप्पणियों पर भक्त की कार्यवाही (Devotee's actions on previous meeting inputs)",
-          "अपने सुझाव लिखें (Please give your comments)",
-        ],
-      },
-    ],
   },
   student: {
-    meetingPlace: {
-      label: "Place of Meeting",
-      options: ["My Home", "Spiritual Friend's Home", "Gurukul Campus"],
+    monthly: {
+      meetingPlace: {
+        label: "Place of Meeting",
+        options: ["My Home", "Spiritual Friend's Home", "Gurukul Campus"],
+      },
+      sections: [
+        {
+          title: "साधना (Sadhna)",
+          fields: [
+            "ग्रन्थ पठन (Book Reading)<br/><br/>आप श्रील प्रभुपद की कौनसी पुस्तक पढ़ रहे हैं? (Which book of Srila Prabhupada you are reading?)",
+            "श्रवण (Hearing)<br/><br/>क्या आप ध्यान से प्रवचन सुनते हैं? (Are you listening to the lectures carefully?)",
+            "जप की गुणवत्ता (Chanting Quality)<br/><br/>क्या आपका जप सुबह 9 बजे से पहले हो जाता है? क्या आप एक जगह बैठ कर जप करते हैं? क्या आपको जप में झपकी आती है? (Are you able to complete chanting before 9 AM? Are you able to complete chanting sitting at one place? Do you feel sleepy while chanting?)",
+          ],
+        },
+        {
+          title: "सेवा (Sewa)",
+          fields: [
+            "नियमित सेवा (Regular Sewa)<br/><br/>क्या आपके पास नियमित सेवा है? कृपया अपनी सेवा के बारे में बताएं (Do you have Regular service? Please mention which service you are doing)",
+            "सेवा से संतुष्टि (Satisfaction with service)<br/><br/>क्या आप अपनी सेवा से संतुष्ट हैं या उसे बदलना चाहते हैं? (Are you feeling happy and motivated doing service - Do you want to change your service)",
+            "सेवा प्रभंधक (Sewa Coordinator)<br/><br/>क्या आपका सेवा प्रबंधक से निरंतर संपर्क होता है या कोई समस्या आ रही है? (Do you have regular discussions with service coordinator and any problems in dealing with them)",
+          ],
+        },
+        {
+          title: "अनुभूति (Realisation)",
+          fields: [
+            "कृतज्ञता (Gratitude)<br/><br/>क्या आप कुछ ऐसा बताना चाहते जो यहाँ आपको अच्छा लगा हो या दिल को छुआ हो? Do you want to share anything which has touched your heart?",
+            "अनर्थ निवृत्ति में संघर्ष (Challenges in Dealing with Anarthas)<br/><br/>क्या आपको इन्द्रियों को नियंत्रित करने में या पढाई करने में, सुबह उठने में , काम इच्छाओं से सम्बंधित कोई संघर्ष महसूस होता है (Do you face any challenge in controlling any of your senses or in studies or in lustful desires or in waking up early in the morning)",
+          ],
+        },
+        {
+          title: "भक्तों से सम्बन्ध (Relationship with devotees)",
+          fields: [
+            "भक्तों से मधुर सम्बन्ध (Good Relationship with devotees)<br/><br/>किन भक्त या बच्चे के साथ आपका मधुर सम्बन्ध है? उनके नाम बताइये और इस सम्बन्ध को बनाये रखने के लिए आप क्या करेंगे? (With whom do you have good relationship and what are you doing to maintain it )",
+            "सम्बन्ध में सुधार (Where Relationship can be Better)<br/><br/>किन भक्तों या बच्चों से सम्बन्ध सुधर सकते हैं? उनके नाम बताईये | आप सम्बन्ध सुधारने के लिए क्या करेंगे, बताइये (With whom you do not have a good relationship and what will/can you do to make it better)",
+          ],
+        },
+        {
+          title: "गुरुकुल में सुधार के विषय (Observations and Suggestions)",
+          fields: [
+            "क्या गुरुकुल में सुधारने के लिए आपका कोई सुझाव है (Any improvement area in gurukul or anything which is not right)",
+            "कोई और अन्य विषय अथवा टिपण्णी ?(Do you have any other inputs or challenges or issues or problems)",
+          ],
+        },
+        {
+          title: "Action and Feedback",
+          fields: [
+            "पिछली मीटिंग में मिली टिप्पणियों पर भक्त की कार्यवाही (Devotee's actions on previous meeting inputs)",
+            "अपने सुझाव लिखें (Please give your comments)",
+          ],
+        },
+      ],
     },
-    sections: [
-      {
-        title: "साधना (Sadhna)",
-        fields: [
-          "ग्रन्थ पठन (Book Reading)<br/><br/>आप श्रील प्रभुपद की कौनसी पुस्तक पढ़ रहे हैं? (Which book of Srila Prabhupada you are reading?)",
-          "श्रवण (Hearing)<br/><br/>क्या आप ध्यान से प्रवचन सुनते हैं? (Are you listening to the lectures carefully?)",
-          "जप की गुणवत्ता (Chanting Quality)<br/><br/>क्या आपका जप सुबह 9 बजे से पहले हो जाता है? क्या आप एक जगह बैठ कर जप करते हैं? क्या आपको जप में झपकी आती है? (Are you able to complete chanting before 9 AM? Are you able to complete chanting sitting at one place? Do you feel sleepy while chanting?)",
-        ],
+    weekly: {
+      meetingPlace: {
+        label: "Place of Meeting",
+        options: ["My Home", "Spiritual Friend's Home", "Gurukul Campus"],
       },
-      {
-        title: "सेवा (Sewa)",
-        fields: [
-          "नियमित सेवा (Regular Sewa)<br/><br/>क्या आपके पास नियमित सेवा है? कृपया अपनी सेवा के बारे में बताएं (Do you have Regular service? Please mention which service you are doing)",
-          "सेवा से संतुष्टि (Satisfaction with service)<br/><br/>क्या आप अपनी सेवा से संतुष्ट हैं या उसे बदलना चाहते हैं? (Are you feeling happy and motivated doing service - Do you want to change your service)",
-          "सेवा प्रभंधक (Sewa Coordinator)<br/><br/>क्या आपका सेवा प्रबंधक से निरंतर संपर्क होता है या कोई समस्या आ रही है? (Do you have regular discussions with service coordinator and any problems in dealing with them)",
-        ],
-      },
-      {
-        title: "अनुभूति (Realisation)",
-        fields: [
-          "कृतज्ञता (Gratitude)<br/><br/>क्या आप कुछ ऐसा बताना चाहते जो यहाँ आपको अच्छा लगा हो या दिल को छुआ हो? Do you want to share anything which has touched your heart?",
-          "अनर्थ निवृत्ति में संघर्ष (Challenges in Dealing with Anarthas)<br/><br/>क्या आपको इन्द्रियों को नियंत्रित करने में या पढाई करने में, सुबह उठने में , काम इच्छाओं से सम्बंधित कोई संघर्ष महसूस होता है (Do you face any challenge in controlling any of your senses or in studies or in lustful desires or in waking up early in the morning)",
-        ],
-      },
-      {
-        title: "भक्तों से सम्बन्ध (Relationship with devotees)",
-        fields: [
-          "भक्तों से मधुर सम्बन्ध (Good Relationship with devotees)<br/><br/>किन भक्त या बच्चे के साथ आपका मधुर सम्बन्ध है? उनके नाम बताइये और इस सम्बन्ध को बनाये रखने के लिए आप क्या करेंगे? (With whom do you have good relationship and what are you doing to maintain it )",
-          "सम्बन्ध में सुधार (Where Relationship can be Better)<br/><br/>किन भक्तों या बच्चों से सम्बन्ध सुधर सकते हैं? उनके नाम बताईये | आप सम्बन्ध सुधारने के लिए क्या करेंगे, बताइये (With whom you do not have a good relationship and what will/can you do to make it better)",
-        ],
-      },
-      {
-        title: "गुरुकुल में सुधार के विषय (Observations and Suggestions)",
-        fields: [
-          "क्या गुरुकुल में सुधारने के लिए आपका कोई सुझाव है (Any improvement area in gurukul or anything which is not right)",
-          "कोई और अन्य विषय अथवा टिपण्णी ?(Do you have any other inputs or challenges or issues or problems)",
-        ],
-      },
-      {
-        title: "Action and Feedback",
-        fields: [
-          "पिछली मीटिंग में मिली टिप्पणियों पर भक्त की कार्यवाही (Devotee's actions on previous meeting inputs)",
-          "अपने सुझाव लिखें (Please give your comments)",
-        ],
-      },
-    ],
+      sections: [
+        {
+          title: "Spiritual",
+          fields: ["Sadhna/Service", "Relations with others"],
+        },
+        {
+          title: "Material",
+          fields: [
+            "Any difficulties in studies",
+            "Any other problems or suggestions",
+          ],
+        },
+        {
+          title: "Action and Feedback",
+          fields: ["Please give your comments"],
+        },
+      ],
+    },
   },
 };
 
 let currentMeetingPerson = null;
 let maxLength = 15; // Minimum characters required for each textarea
+let selectedMeetingType = null;
 const meetingForm = document.getElementById("meetingForm");
 const saveButton = document.getElementById("meetingSubmitBtn");
 
-function populateMeetingForm(personType) {
+function populateMeetingForm(personType, selectedType = null) {
   if (!meetingForm) {
     console.error("Meeting form container not found.");
     return;
   }
 
-  // Clear previous form
-  meetingForm.innerHTML = "";
-  const config = meetingFormConfig[personType];
+  const personConfig = meetingFormConfig[personType];
 
-  if (!config) {
-    console.error("No meeting form configuration found for:", personType);
+  if (!personConfig) {
+    console.error("No meeting configuration found for:", personType);
     return;
   }
 
+  const meetingTypes = Object.keys(personConfig);
+
+  // =====================================================
+  // DETERMINE MEETING TYPE
+  // =====================================================
+
+  let meetingType = selectedType || meetingTypes[0];
+
+  selectedMeetingType = meetingType;
+
+  // =====================================================
+  // CLEAR PREVIOUS FORM FIRST
+  // =====================================================
+
+  meetingForm.innerHTML = "";
+
+  // =====================================================
+  // MEETING TYPE SELECTION
+  // =====================================================
+
+  if (meetingTypes.length > 1) {
+    const typeLabel = document.createElement("label");
+
+    typeLabel.textContent = "Meeting Type";
+    typeLabel.className = "required";
+
+    meetingForm.appendChild(typeLabel);
+
+    const typeOptions = document.createElement("div");
+
+    typeOptions.className = "options";
+
+    meetingTypes.forEach((type, index) => {
+      const radio = document.createElement("input");
+
+      radio.type = "radio";
+
+      radio.id = `meeting_type_${personType}_${index}`;
+
+      radio.name = `meeting_type_${personType}`;
+
+      radio.value = type;
+
+      radio.className = "custom-radio";
+
+      const label = document.createElement("label");
+
+      label.htmlFor = radio.id;
+
+      // Display friendly name
+      label.textContent =
+        type === "weekly"
+          ? "Weekly Meeting"
+          : type === "monthly"
+            ? "Monthly Meeting"
+            : type;
+
+      label.className = "custom-label-radio-content-custom-box";
+
+      typeOptions.appendChild(radio);
+      typeOptions.appendChild(label);
+
+      // Select current meeting type
+      if (type === meetingType) {
+        radio.checked = true;
+      }
+
+      // =================================================
+      // CHANGE MEETING TYPE
+      // =================================================
+
+      radio.addEventListener("change", () => {
+        if (!radio.checked) {
+          return;
+        }
+
+        selectedMeetingType = radio.value;
+
+        const errorDiv = document.getElementById(
+          `Err_meeting_type_${personType}`,
+        );
+
+        if (errorDiv) {
+          errorDiv.innerHTML = "";
+        }
+
+        // Rebuild form with new questions
+        populateMeetingForm(personType, radio.value);
+      });
+    });
+
+    meetingForm.appendChild(typeOptions);
+
+    // Error div
+    const errorDiv = document.createElement("div");
+
+    errorDiv.className = "error";
+
+    errorDiv.id = `Err_meeting_type_${personType}`;
+
+    meetingForm.appendChild(errorDiv);
+  }
+
+  // =====================================================
+  // SELECT CONFIG FOR CURRENT MEETING TYPE
+  // =====================================================
+
+  const config = personConfig[meetingType];
+
+  if (!config) {
+    console.error(
+      "No configuration found for meeting type:",
+      personType,
+      meetingType,
+    );
+
+    return;
+  }
+
+  // =====================================================
+  // NOW CREATE YOUR FORM
+  // =====================================================
+
+  createMeetingFormFields(personType, meetingType, config);
+}
+
+function createMeetingFormFields(personType, meetingType, config) {
   // =========================
   // PLACE OF MEETING
   // =========================
@@ -302,13 +447,6 @@ function populateMeetingForm(personType) {
     });
   });
 
-  // const firstHeader = meetingForm.querySelector(".accordion-header");
-
-  // if (firstHeader) {
-  //   firstHeader.classList.add("active");
-  //   firstHeader.nextElementSibling.classList.add("show");
-  // }
-
   if (saveButton) {
     saveButton.disabled = true;
   }
@@ -331,13 +469,14 @@ function toggleMeetingSection(header) {
   }
 }
 
-function meetPersonNow(type, personId, personName) {
+function meetPersonNow(type, personId, personName, personSystemName) {
   cleanMeetingForm();
   // Store current meeting person
   currentMeetingPerson = {
     type: type,
     id: personId,
     name: personName,
+    systemName: personSystemName,
   };
 
   // Set heading
@@ -460,31 +599,57 @@ function getMeetingFormData() {
   }
 
   const personType = currentMeetingPerson.type;
-  const sections = meetingFormConfig[personType];
 
-  if (!sections) {
-    console.error("No meeting form configuration found for:", personType);
+  const config = meetingFormConfig[personType][selectedMeetingType];
+
+  if (!config) {
+    console.error(
+      "No meeting form configuration found for:",
+      personType,
+      selectedMeetingType,
+    );
     return null;
   }
 
-  const data = {};
+  const data = {
+    meetingType: selectedMeetingType,
+    placeOfMeeting: "",
+    sections: {},
+  };
 
-  sections.forEach((section, sectionIndex) => {
-    data[section.title] = {};
+  // =====================================================
+  // PLACE OF MEETING
+  // =====================================================
 
+  const selectedPlace = document.querySelector(
+    `input[name="meeting_place_${personType}"]:checked`,
+  );
+
+  if (selectedPlace) {
+    data.placeOfMeeting = selectedPlace.value;
+  }
+
+  // =====================================================
+  // SECTIONS
+  // =====================================================
+
+  config.sections.forEach((section, sectionIndex) => {
     section.fields.forEach((field, fieldIndex) => {
       const textarea = document.getElementById(
         `meeting_${personType}_${sectionIndex}_${fieldIndex}`,
       );
 
-      data[section.title][field] = textarea ? textarea.value.trim() : "";
+      // Only use text before <br/><br/> as the key
+      const fieldKey = `${section.title} - ${field.split("<br/><br/>")[0].trim()}`;
+
+      data.sections[fieldKey] = textarea ? textarea.value.trim() : "";
     });
   });
 
   return data;
 }
 
-function saveMeeting() {
+async function saveMeeting() {
   if (!currentMeetingPerson) {
     SHOW_ERROR_POPUP("No person selected.");
     return;
@@ -495,5 +660,29 @@ function saveMeeting() {
   console.log("Meeting person:", currentMeetingPerson);
   console.log("Meeting data:", meetingData);
 
-  // API call here
+  if (!meetingData) {
+    SHOW_ERROR_POPUP("Invalid meeting data.");
+    return;
+  }
+
+  const response = await CALL_API("SAVE_MEETING", {
+    personId: currentMeetingPerson.id,
+    systemName: currentMeetingPerson.systemName,
+    personType: currentMeetingPerson.type,
+    meetingData: meetingData,
+    facName: selectedFacilitator.name,
+  });
+
+  if (response?.status === "success" && response.data) {
+    if (typeof response.data === "string") {
+      SHOW_ERROR_POPUP(`${response.data}`);
+      return;
+    }
+    SHOW_SUCCESS_POPUP("Meeting data saved successfully.", () => {
+      resetMeetingForm();
+      openSpiritualFriendsWindow();
+    });
+  } else {
+    SHOW_ERROR_POPUP("Error saving meeting data\n\n" + response.error);
+  }
 }

@@ -27,6 +27,11 @@
   width: 12%;
 }
 
+.people-table td.feedback-column {
+  color: var(--text-color) !important;
+  width: 18%;
+}
+
 .people-table td.category-cell {
   color: var(--text-color);
   width: 7%;
@@ -152,6 +157,7 @@
 .people-table-container {
   width: 100%;
   overflow-x: auto;
+  border-top: 1px solid var(--border-color);
 }
 
 /* ================= TABLE ================= */
@@ -251,6 +257,11 @@
   color: var(--white-color);
 }
 
+.view-btn-history {
+  background-color: var(--tertiary-color);
+  color: var(--white-color);
+}
+
 .meet-btn:disabled {
   background-color: var(--tertiary-color-light);
   color: var(--white-color);
@@ -296,18 +307,119 @@
   background-color: var(--background-color);
 }
 
-.people-table-container div.people-search-container {
+/* .people-table-container div.people-search-container {
   background-color: var(--background-color);
-}
+  width: 50%;
+} */
 
 .people-table-container input.people-search {
   padding: 9px 12px;
   border: 1px solid black;
   border-radius: 5px;
   font-size: 14px;
+  width: 100%;
+  background-color: var(--border-color);
 }
 
 .people-search:focus {
   outline: none;
   border-color: var(--primary-color);
+}
+
+/* =====================================================
+   MEETING DETAILS
+===================================================== */
+
+.meeting-info {
+  padding: 10px;
+  margin-bottom: 15px;
+
+  border-radius: 5px;
+
+  background: #f1f1f1;
+}
+
+.meeting-info p {
+  margin: 5px 0;
+}
+
+/* Individual question/answer */
+
+.meeting-detail-field {
+  margin-bottom: 15px;
+}
+
+.meeting-detail-field-heading {
+  color: var(--primary-color);
+  font-size: 17px;
+}
+
+.meeting-detail-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.meeting-detail-answer {
+  padding: 10px;
+
+  background: white;
+
+  border: 1px solid #ccc;
+  border-radius: 4px;
+
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  margin-top: 10px;
+}
+
+.history-feedback-wrapper {
+  position: relative;
+  width: 100%;
+  line-height: 1.4;
+}
+
+.history-feedback-text {
+  line-height: 1.4;
+
+  /* 4 lines */
+  max-height: calc(1.4em * 4);
+
+  overflow: hidden;
+  word-break: break-word;
+
+  padding-right: 2px;
+}
+
+/* Arrow */
+.history-feedback-toggle {
+  display: none;
+
+  position: absolute;
+  right: 0;
+  bottom: 0;
+
+  border: none;
+  background: var(--border-color);
+
+  padding: 0;
+  margin: 0;
+
+  width: 16px;
+  height: 20px;
+
+  font-size: 11px;
+  line-height: 20px;
+
+  cursor: pointer;
+}
+
+.history-feedback-toggle.show {
+  display: block;
+}
+
+/* Expanded */
+.history-feedback-wrapper.expanded .history-feedback-text {
+  max-height: none;
+  overflow: visible;
+  padding-right: 0;
 }

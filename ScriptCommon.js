@@ -883,6 +883,27 @@ function SHOW_SUCCESS_POPUP(message, onClose) {
   };
 }
 
+function SHOW_SUCCESS_POPUP_AWAIT(message, onClose) {
+  return new Promise((resolve) => {
+    const popup = document.getElementById("successPopup");
+    const msg = document.getElementById("successMessage");
+    const closeBtn = document.getElementById("successOkButton");
+
+    msg.innerHTML = message;
+    popup.style.display = "flex";
+
+    closeBtn.onclick = () => {
+      popup.style.display = "none";
+
+      // Optional callback
+      onClose?.();
+
+      // Resolve only after OK is clicked
+      resolve();
+    };
+  });
+}
+
 function SHOW_INFO_POPUP(message) {
   document.getElementById("infoMessage").innerHTML = message;
   document.getElementById("infoPopup").style.display = "flex";

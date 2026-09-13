@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="favicon.png" />
-    <title>NKD Spiritual Friend's App</title>
+    <title>NKD Spiritual Friends App</title>
 
     <link rel="stylesheet" href="StylesCommon.css" />
     <link rel="stylesheet" href="StylesSpecific.css" />
@@ -305,7 +305,7 @@
             <button
               type="button"
               class="yellow"
-              onclick="SHOW_SPECIFIC_DIV('myFriendsPopup')"
+              onclick="SHOW_SPECIFIC_DIV('meetingHistoryPopup')"
             >
               Back
             </button>
@@ -326,7 +326,12 @@
             <button
               type="button"
               class="green"
-              onclick="saveMeeting()"
+              onclick="
+                SHOW_CONFIRMATION_POPUP(
+                  'Are you sure you want to submit the meeting data?',
+                  saveMeeting,
+                )
+              "
               disabled
               id="meetingSubmitBtn"
             >
@@ -335,12 +340,76 @@
           </div>
         </div>
       </div>
+
+      <!-- =====================================================
+     MEETING HISTORY POPUP
+===================================================== -->
+
+      <div class="popup" id="meetingHistoryPopup">
+        <div class="popup-content scrollable-content">
+          <img
+            src="https://drive.google.com/thumbnail?id=1aYobBIvFM5yJUgqLktnHjzwxuFX0OfGn&sz=w500"
+            alt="NKD Logo"
+          />
+
+          <div>
+            <p class="user-info-block"></p>
+          </div>
+
+          <br />
+          <h3 id="meetingHistoryHeader"></h3>
+          <br />
+
+          <div id="meetingHistoryContainer"></div>
+
+          <div class="button-row">
+            <button class="red" onclick="SHOW_SPECIFIC_DIV('myFriendsPopup')">
+              Back
+            </button>
+            <button class="green" id="meetingHistoryMeetNowBtn">
+              Meet Now
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- =====================================================
+     MEETING DETAILS POPUP
+===================================================== -->
+
+      <div id="meetingDetailsPopup" class="popup">
+        <div class="popup-content">
+          <img
+            src="https://drive.google.com/thumbnail?id=1aYobBIvFM5yJUgqLktnHjzwxuFX0OfGn&sz=w500"
+            alt="NKD Logo"
+          />
+
+          <div>
+            <p class="user-info-block"></p>
+          </div>
+
+          <br />
+          <h3 id="meetingHistoryHeader2"></h3>
+          <br />
+
+          <div id="meetingDetailsContainer"></div>
+
+          <button
+            type="button"
+            class="red"
+            onclick="SHOW_SPECIFIC_DIV('meetingHistoryPopup')"
+          >
+            Back
+          </button>
+        </div>
+      </div>
     </div>
 
     <script src="ScriptCommon.js"></script>
     <script src="ScriptConstants.js"></script>
     <script src="Script.js"></script>
     <script src="ScriptMyFriends.js"></script>
+    <script src="ScriptMeetHistory.js"></script>
     <script src="ScriptMeetFriend.js"></script>
   </body>
 </html>

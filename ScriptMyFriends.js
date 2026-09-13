@@ -97,7 +97,6 @@ function renderDevoteeTable(devotees = []) {
         <th>4 weeks Morning Attendance</th>
         <th>4 weeks Evening Attendance</th>
         <th>Meeting Due(Days)</th>
-        <th>Exception Due(Days)</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -156,10 +155,6 @@ function renderDevoteeTable(devotees = []) {
         ${`${devotee.dueDays}`}
       </td>
 
-      <td class="${exceptionDueClass}">
-        ${`${devotee.exceptionDueDays}`}
-      </td>
-
       <td class="person-actions">
 
         <button
@@ -170,7 +165,7 @@ function renderDevoteeTable(devotees = []) {
 
         <button
           class="people-action-btn meet-btn"
-          onclick="meetPersonNow('devotee', '${devotee.id}', '${devotee.name.split("\n")[0]}')">
+          onclick="openMeetingHistory('devotee', '${devotee.name.split("\n")[0]}', '${devotee.systemName}', '${devotee.id}')">
           Meetings
         </button>
 
@@ -237,7 +232,7 @@ function renderStudentTable(students = []) {
         <th>Name</th>
         <th>Category</th>
         <th>Weekly Meeting Due In (Days)</th>
-        <th>Meeting Due In (Days)</th>
+        <th>Monthly Meeting Due In (Days)</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -253,6 +248,11 @@ function renderStudentTable(students = []) {
       student.dueDays,
       MEETING_DUE_THRESHOLDS,
     );
+    const weeklyDueClass = getDueClass(
+      "student",
+      student.weeklyDueDays,
+      MEETING_DUE_THRESHOLDS,
+    );
     const row = document.createElement("tr");
 
     row.innerHTML = `
@@ -264,7 +264,7 @@ function renderStudentTable(students = []) {
         ${student.category || "-"}
       </td>
 
-      <td class="${dueClass}">
+      <td class="${weeklyDueClass}">
           ${student.weeklyDueDays} 
     </td>
 
@@ -282,16 +282,8 @@ function renderStudentTable(students = []) {
 
         <button
           class="people-action-btn meet-btn"
-          onclick="meetPersonNow('student', '${student.id}', '${student.name.split("\n")[0]}')">
-          General Meeting
-        </button>
-
-        <button
-            type="button"
-            class="people-action-btn meet-btn"
-            onclick="weeklyMeetingNow('${student.id}', '${student.name.split("\n")[0]}')" disabled
-            >
-            Weekly Meeting
+          onclick="openMeetingHistory('student', '${student.name.split("\n")[0]}', '${student.systemName}', '${student.id}')">
+          Meetings
         </button>
 
         <button
