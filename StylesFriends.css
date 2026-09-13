@@ -152,6 +152,7 @@
 .people-table-container {
   width: 100%;
   overflow-x: auto;
+  border-top: 1px solid var(--border-color);
 }
 
 /* ================= TABLE ================= */
@@ -296,18 +297,133 @@
   background-color: var(--background-color);
 }
 
-.people-table-container div.people-search-container {
+/* .people-table-container div.people-search-container {
   background-color: var(--background-color);
-}
+  width: 50%;
+} */
 
 .people-table-container input.people-search {
   padding: 9px 12px;
   border: 1px solid black;
   border-radius: 5px;
   font-size: 14px;
+  width: 100%;
+  background-color: var(--border-color);
 }
 
 .people-search:focus {
   outline: none;
   border-color: var(--primary-color);
+}
+
+/* =====================================================
+   MEETING HISTORY
+===================================================== */
+
+.meeting-history-table {
+  width: 100%;
+}
+
+.meeting-history-table td {
+  vertical-align: middle;
+}
+
+/* =====================================================
+   FEEDBACK
+===================================================== */
+
+.meeting-feedback {
+  max-width: 300px;
+  text-align: left !important;
+  vertical-align: top !important;
+}
+
+.feedback-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+
+  white-space: normal;
+  overflow-wrap: anywhere;
+
+  line-height: 1.4;
+}
+
+.feedback-text.expanded {
+  display: block;
+}
+
+.feedback-expand-btn {
+  border: none;
+  background: transparent;
+
+  color: var(--primary-color);
+
+  cursor: pointer;
+
+  font-size: 14px;
+
+  padding: 3px 5px;
+
+  margin-top: 3px;
+}
+
+.feedback-expand-btn:hover {
+  background: transparent;
+}
+
+/* =====================================================
+   HISTORY ACTIONS
+===================================================== */
+
+.meeting-history-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+
+  margin-top: 20px;
+  padding-top: 15px;
+
+  border-top: 1px solid #ccc;
+}
+
+/* =====================================================
+   MEETING DETAILS
+===================================================== */
+
+.meeting-info {
+  padding: 10px;
+  margin-bottom: 15px;
+
+  border-radius: 5px;
+
+  background: #f1f1f1;
+}
+
+.meeting-info p {
+  margin: 5px 0;
+}
+
+/* Individual question/answer */
+
+.meeting-detail-field {
+  margin-bottom: 15px;
+}
+
+.meeting-detail-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.meeting-detail-answer {
+  padding: 10px;
+
+  background: white;
+
+  border: 1px solid #ccc;
+  border-radius: 4px;
+
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
