@@ -169,6 +169,10 @@
           <br />
           <h2>Spiritual Friends' Dashboard</h2>
 
+          <button class="green" onclick="openAddDevoteeForm()">
+            + Add New Devotee
+          </button>
+
           <button class="green" onclick="openSpiritualFriendsWindow()">
             My Spiritual Friends
           </button>
@@ -403,6 +407,327 @@
           </button>
         </div>
       </div>
+
+      <!-- =====================================================
+     ADD DEVOTEE POPUP
+===================================================== -->
+
+      <div class="popup" id="addDevoteePopup">
+        <div class="popup-content scrollable-content">
+          <img
+            src="https://drive.google.com/thumbnail?id=1aYobBIvFM5yJUgqLktnHjzwxuFX0OfGn&sz=w500"
+            alt="NKD Logo"
+          />
+
+          <div>
+            <p class="user-info-block"></p>
+          </div>
+
+          <br />
+          <h3>Add New Devotee</h3>
+
+          <div id="addDevoteeForm">
+            <!-- First Name -->
+            <label class="required">First Name (Non Initiated)</label>
+            <input
+              type="text"
+              id="devoteeFirstName"
+              placeholder="Enter first name"
+            />
+            <div id="Err_devoteeFirstName" class="error"></div>
+
+            <!-- Last Name -->
+            <label class="required">Last Name (Non Initiated)</label>
+            <input
+              type="text"
+              id="devoteeLastName"
+              placeholder="Enter last name"
+            />
+            <div id="Err_devoteeLastName" class="error"></div>
+
+            <!-- Initiated Name -->
+            <label>Initiated Name</label>
+            <input
+              type="text"
+              id="devoteeInitiatedName"
+              placeholder="WITHOUT Das/Devi Dasi/Prabhuji/Mataji"
+            />
+            <div id="Err_devoteeInitiatedName" class="error"></div>
+
+            <!-- Official Name -->
+            <label class="required"> Official Name (As per Aadhar) </label>
+
+            <input
+              type="text"
+              id="devoteeOfficialName"
+              placeholder="Enter official name"
+            />
+
+            <div id="Err_devoteeOfficialName" class="error"></div>
+
+            <!-- Gender -->
+            <label class="required">Gender</label>
+
+            <div class="options">
+              <input
+                type="radio"
+                id="devoteeGenderMale"
+                name="devoteeGender"
+                value="Male"
+                class="custom-radio"
+              />
+
+              <label
+                for="devoteeGenderMale"
+                class="custom-label-radio-content-custom-box"
+              >
+                Male
+              </label>
+
+              <input
+                type="radio"
+                id="devoteeGenderFemale"
+                name="devoteeGender"
+                value="Female"
+                class="custom-radio"
+              />
+
+              <label
+                for="devoteeGenderFemale"
+                class="custom-label-radio-content-custom-box"
+              >
+                Female
+              </label>
+            </div>
+
+            <div id="Err_devoteeGender" class="error"></div>
+
+            <!-- Mobile -->
+            <label class="required">Mobile Number</label>
+
+            <input
+              type="text"
+              id="devoteeMobile"
+              placeholder="Enter 10 digit mobile number"
+              maxlength="10"
+            />
+
+            <div id="Err_devoteeMobile" class="error"></div>
+
+            <!-- WhatsApp -->
+            <label class="required">WhatsApp Number</label>
+
+            <div class="options">
+              <label
+                for="devoteeWhatsappSameAsMobile"
+                class="custom-label-chkbox"
+              >
+                Same as Mobile Number
+              </label>
+              <input
+                type="checkbox"
+                id="devoteeWhatsappSameAsMobile"
+                class="custom-radio"
+              />
+            </div>
+
+            <input
+              type="text"
+              id="devoteeWhatsapp"
+              placeholder="Enter 10 digit WhatsApp number"
+              maxlength="10"
+            />
+
+            <div id="Err_devoteeWhatsapp" class="error"></div>
+
+            <!-- Date of Birth -->
+            <label class="required">Date of Birth</label>
+
+            <input type="date" id="devoteeDOB" />
+
+            <div id="Err_devoteeDOB" class="error"></div>
+
+            <!-- Date of Marriage -->
+            <label>Date of Marriage</label>
+
+            <input type="date" id="devoteeMarriageDate" />
+
+            <div id="Err_devoteeMarriageDate" class="error"></div>
+
+            <!-- Email -->
+            <label>Email</label>
+
+            <input
+              type="text"
+              id="devoteeEmail"
+              placeholder="Enter email address"
+            />
+
+            <div id="Err_devoteeEmail" class="error"></div>
+
+            <!-- Residence Address -->
+            <label class="required"> Residence Address </label>
+
+            <textarea
+              id="devoteeAddress"
+              rows="3"
+              placeholder="Enter residence address"
+            >
+            </textarea>
+
+            <div id="Err_devoteeAddress" class="error"></div>
+
+            <!-- Profession -->
+            <label class="required">Profession</label>
+
+            <input
+              type="text"
+              id="devoteeProfession"
+              placeholder="Enter profession"
+            />
+
+            <div id="Err_devoteeProfession" class="error"></div>
+
+            <!-- Skills -->
+            <label class="required">Skills</label>
+
+            <textarea id="devoteeSkills" rows="3" placeholder="Enter skills">
+            </textarea>
+
+            <div id="Err_devoteeSkills" class="error"></div>
+
+            <!-- Weekly Off -->
+            <!-- <label class="required">Weekly Off</label>
+
+            <div class="weekly-off-options">
+              <div class="weekly-off-option">
+                <input
+                  type="checkbox"
+                  id="devoteeWeeklyOffNA"
+                  value="NA"
+                  class="custom-checkbox"
+                />
+                <label for="devoteeWeeklyOffNA"> NA </label>
+              </div>
+
+              <div class="weekly-off-option">
+                <input
+                  type="checkbox"
+                  id="devoteeWeeklyOffMon"
+                  value="Monday"
+                  class="custom-checkbox weekly-off-day"
+                />
+                <label for="devoteeWeeklyOffMon"> Mon </label>
+              </div>
+
+              <div class="weekly-off-option">
+                <input
+                  type="checkbox"
+                  id="devoteeWeeklyOffTue"
+                  value="Tuesday"
+                  class="custom-checkbox weekly-off-day"
+                />
+                <label for="devoteeWeeklyOffTue"> Tue </label>
+              </div>
+
+              <div class="weekly-off-option">
+                <input
+                  type="checkbox"
+                  id="devoteeWeeklyOffWed"
+                  value="Wednesday"
+                  class="custom-checkbox weekly-off-day"
+                />
+                <label for="devoteeWeeklyOffWed"> Wed </label>
+              </div>
+
+              <div class="weekly-off-option">
+                <input
+                  type="checkbox"
+                  id="devoteeWeeklyOffThu"
+                  value="Thursday"
+                  class="custom-checkbox weekly-off-day"
+                />
+                <label for="devoteeWeeklyOffThu"> Thu </label>
+              </div>
+
+              <div class="weekly-off-option">
+                <input
+                  type="checkbox"
+                  id="devoteeWeeklyOffFri"
+                  value="Friday"
+                  class="custom-checkbox weekly-off-day"
+                />
+                <label for="devoteeWeeklyOffFri"> Fri </label>
+              </div>
+
+              <div class="weekly-off-option">
+                <input
+                  type="checkbox"
+                  id="devoteeWeeklyOffSat"
+                  value="Saturday"
+                  class="custom-checkbox weekly-off-day"
+                />
+                <label for="devoteeWeeklyOffSat"> Sat </label>
+              </div>
+
+              <div class="weekly-off-option">
+                <input
+                  type="checkbox"
+                  id="devoteeWeeklyOffSun"
+                  value="Sunday"
+                  class="custom-checkbox weekly-off-day"
+                />
+                <label for="devoteeWeeklyOffSun"> Sun </label>
+              </div>
+            </div>
+
+            <div id="Err_devoteeWeeklyOff" class="error"></div> -->
+          </div>
+
+          <!-- ACTIONS -->
+
+          <div class="button-row">
+            <button
+              type="button"
+              class="yellow"
+              onclick="
+                resetAddDevoteeForm();
+                SHOW_SPECIFIC_DIV('userMenuPopup');
+              "
+            >
+              Back
+            </button>
+
+            <button
+              type="button"
+              class="red"
+              onclick="
+                SHOW_CONFIRMATION_POPUP(
+                  'Are you sure you want to reset the form?',
+                  resetAddDevoteeForm,
+                )
+              "
+            >
+              Reset
+            </button>
+
+            <button
+              type="button"
+              class="green"
+              onclick="
+                SHOW_CONFIRMATION_POPUP(
+                  'Are you sure you want to submit the data?',
+                  saveNewDevotee,
+                )
+              "
+              disabled
+              id="newDevoteeSubmitBtn"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="ScriptCommon.js"></script>
@@ -411,5 +736,6 @@
     <script src="ScriptMyFriends.js"></script>
     <script src="ScriptMeetHistory.js"></script>
     <script src="ScriptMeetFriend.js"></script>
+    <script src="ScriptNewDevotee.js"></script>
   </body>
 </html>

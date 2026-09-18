@@ -557,7 +557,7 @@ function updateMeetingSubmitButton() {
   saveButton.disabled = !validateAllMeetingFields();
 }
 
-function validateMeetingField(textarea) {
+function validateMeetingField(textarea, maxlen = maxLength) {
   const errorDiv = document.getElementById("Err_" + textarea.id);
 
   // Convert multiple spaces to a single space
@@ -570,8 +570,8 @@ function validateMeetingField(textarea) {
     return false;
   }
 
-  if (length < 15) {
-    errorDiv.innerHTML = `Please enter at least 15 characters. (${length}/15)`;
+  if (length < maxlen) {
+    errorDiv.innerHTML = `Please enter at least ${maxlen} characters. (${length}/${maxlen})`;
     return false;
   }
 
