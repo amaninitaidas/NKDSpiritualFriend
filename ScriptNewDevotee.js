@@ -1,11 +1,21 @@
-function openAddDevoteeForm() {
+let existingDevoteeMap = {};
+
+async function openAddDevoteeForm() {
   resetAddDevoteeForm();
   //setupWeeklyOffLogic();
   setupAddDevoteeValidation();
   setupWhatsappSameAsMobile();
   setDOBMaxDate();
+  setGenderFromFacName();
 
-  SHOW_SPECIFIC_DIV("addDevoteePopup");
+  const response = await CALL_API("GET_DEVOTEE_MAP", {});
+
+  if (response?.status === "success" && response.data) {
+    existingDevoteeMap = response.data;
+    SHOW_SPECIFIC_DIV("addDevoteePopup");
+  } else {
+    SHOW_ERROR_POPUP("Error retrieving devotee data\n\n" + response.error);
+  }
 }
 
 function setupWeeklyOffLogic() {
@@ -52,10 +62,7 @@ function validateAddDevoteeForm() {
   // Minimum 5 characters, no spaces
   // =====================================================
 
-  const firstNameValid = validateMeetingField(
-    document.getElementById("devoteeFirstName"),
-    3,
-  );
+  const firstNameValid = validateInitiatedName("devoteeFirstName", 3);
 
   if (!firstNameValid) {
     valid = false;
@@ -66,19 +73,13 @@ function validateAddDevoteeForm() {
   // Minimum 5 characters, no spaces
   // =====================================================
 
-  const lastNameValid = validateMeetingField(
-    document.getElementById("devoteeLastName"),
-    3,
-  );
+  const lastNameValid = validateInitiatedName("devoteeLastName", 3);
 
   if (!lastNameValid) {
     valid = false;
   }
 
-  const officialNameValid = validateMeetingField(
-    document.getElementById("devoteeOfficialName"),
-    7,
-  );
+  const officialNameValid = validateInitiatedName("devoteeOfficialName", 7);
 
   if (!officialNameValid) {
     valid = false;
@@ -164,7 +165,7 @@ function validateAddDevoteeForm() {
   // Optional
   // =====================================================
 
-  const initiatedNameValid = validateInitiatedName();
+  const initiatedNameValid = validateInitiatedName("devoteeInitiatedName", 5);
 
   if (!initiatedNameValid) {
     valid = false;
@@ -315,7 +316,7 @@ async function saveNewDevotee() {
       `Devotee added successfully.\n\nPassword: ${response.data.split(" - ")[0]}`,
       () => {
         resetAddDevoteeForm();
-        let outMessage = `Hare Krishna Prabhuji. Dandwat Pranaam.\n\nNew devotee: ${devoteeData.firstName} ${devoteeData.lastName} ${gender == "M" ? "Prabhuji" : "Mataji"} added to database by: ${devoteeData.facName} at row: ${response.data.split(" - ")[1]}\n\nYour servant`;
+        let outMessage = `Hare Krishna Prabhuji. Dandwat Pranaam.\n\nNew devotee: ${devoteeData.firstName} ${devoteeData.lastName} ${devoteeData.gender == "M" ? "Prabhuji" : "Mataji"} added to database by: ${devoteeData.facName} at row: ${response.data.split(" - ")[1]}\n\nYour servant`;
         CALL_API_WITHOUT_LOADING("SEND_MESSAGE", {
           toDetail: ["9650339551", "9599021663"],
           message: outMessage,
@@ -394,6 +395,12 @@ function setupAddDevoteeValidation() {
     element.addEventListener("input", validateAddDevoteeForm);
     element.addEventListener("change", validateAddDevoteeForm);
   });
+
+  const mobileInput = document.getElementById("devoteeMobile");
+
+  if (mobileInput) {
+    mobileInput.addEventListener("input", checkExistingDevoteeMobile);
+  }
 }
 
 function setDOBMaxDate() {
@@ -435,9 +442,9 @@ function formatDateForAPI(dateValue) {
   return `${day}-${month}-${year}`;
 }
 
-function validateInitiatedName() {
-  const input = document.getElementById("devoteeInitiatedName");
-  const errorDiv = document.getElementById("Err_devoteeInitiatedName");
+function validateInitiatedName(input_id_name, maxLen) {
+  const input = document.getElementById(`${input_id_name}`);
+  const errorDiv = document.getElementById(`Err_${input_id_name}`);
 
   const value = input.value.trim();
 
@@ -447,8 +454,8 @@ function validateInitiatedName() {
     return true;
   }
 
-  if (value.length < 5) {
-    errorDiv.innerText = `Please enter at least 5 characters. (${value.length}/5 characters)`;
+  if (value.length < maxLen) {
+    errorDiv.innerText = `Please enter at least ${maxLen} characters. (${value.length}/${maxLen} characters)`;
     return false;
   }
 
@@ -461,7 +468,7 @@ function validateInitiatedName() {
   // Only letters and single spaces
   if (!/^[A-Za-z]+(?: [A-Za-z]+){0,4}$/.test(value)) {
     errorDiv.innerText =
-      "Enter 1 to 5 words with only one space between words.";
+      "Enter 1 to 5 words with only one space between words. Numbers not supported!";
     return false;
   }
 
@@ -474,4 +481,57 @@ function validateInitiatedName() {
 
   errorDiv.innerText = "";
   return true;
+}
+
+function setGenderFromFacName() {
+  const genderMale = document.getElementById("devoteeGenderMale");
+  const genderFemale = document.getElementById("devoteeGenderFemale");
+  const genderError = document.getElementById("Err_devoteeGender");
+
+  if (!genderMale || !genderFemale) return;
+
+  // Reset first
+  genderMale.checked = false;
+  genderFemale.checked = false;
+  genderMale.disabled = false;
+  genderFemale.disabled = false;
+
+  const name = String(selectedFacilitator.name || "").toLowerCase();
+
+  if (name.includes("prabhuji")) {
+    genderMale.checked = true;
+    genderMale.disabled = true;
+    genderFemale.disabled = true;
+
+    if (genderError) {
+      genderError.innerHTML = "";
+    }
+  } else if (name.includes("mataji")) {
+    genderFemale.checked = true;
+    genderMale.disabled = true;
+    genderFemale.disabled = true;
+
+    if (genderError) {
+      genderError.innerHTML = "";
+    }
+  }
+}
+
+function checkExistingDevoteeMobile() {
+  const mobileInput = document.getElementById("devoteeMobile");
+
+  if (!mobileInput) return;
+
+  const mobile = mobileInput.value.trim();
+
+  // Only check once a complete 10-digit number is entered
+  if (!/^[6-9]\d{9}$/.test(mobile)) {
+    return;
+  }
+
+  if (existingDevoteeMap[mobile]) {
+    SHOW_INFO_POPUP(
+      `This mobile number already exists for devotee(s):<br/><b>${existingDevoteeMap[mobile]}</b>`,
+    );
+  }
 }
