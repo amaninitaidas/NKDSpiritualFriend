@@ -312,9 +312,14 @@ async function saveNewDevotee() {
       return;
     }
     SHOW_SUCCESS_POPUP(
-      `Devotee added successfully.\n\nPassword: ${response.data}`,
+      `Devotee added successfully.\n\nPassword: ${response.data.split(" - ")[0]}`,
       () => {
         resetAddDevoteeForm();
+        let outMessage = `Hare Krishna Prabhuji. Dandwat Pranaam.\n\nNew devotee: ${devoteeData.firstName} ${devoteeData.lastName} ${gender == "M" ? "Prabhuji" : "Mataji"} added to database by: ${devoteeData.facName} at row: ${response.data.split(" - ")[1]}\n\nYour servant`;
+        CALL_API_WITHOUT_LOADING("SEND_MESSAGE", {
+          toDetail: ["9650339551", "9599021663"],
+          message: outMessage,
+        });
         openAddDevoteeForm();
       },
     );
