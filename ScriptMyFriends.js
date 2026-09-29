@@ -65,18 +65,6 @@ function renderDevoteeTable(devotees = []) {
     return;
   }
 
-  const searchDiv = document.createElement("div");
-  searchDiv.className = "people-search-container";
-
-  searchDiv.innerHTML = `
-  <input
-    type="text"
-    id="devoteeSearch"
-    class="people-search"
-    placeholder="Search devotees..."
-  />
-`;
-  container.appendChild(searchDiv);
   document
     .getElementById("devoteeSearch")
     .addEventListener("input", function () {
@@ -89,7 +77,7 @@ function renderDevoteeTable(devotees = []) {
   table.id = "devoteeTable";
 
   table.innerHTML = `
-    <thead>
+    <thead class="table-header">
       <tr>
         <th>Name</th>
         <th>Category</th>
@@ -203,18 +191,6 @@ function renderStudentTable(students = []) {
     return;
   }
 
-  const searchDiv = document.createElement("div");
-  searchDiv.className = "people-search-container";
-
-  searchDiv.innerHTML = `
-  <input
-    type="text"
-    id="studentSearch"
-    class="people-search"
-    placeholder="Search students..."
-  />
-`;
-  container.appendChild(searchDiv);
   document
     .getElementById("studentSearch")
     .addEventListener("input", function () {
@@ -227,7 +203,7 @@ function renderStudentTable(students = []) {
   table.id = "studentTable";
 
   table.innerHTML = `
-    <thead>
+    <thead class="table-header">
       <tr>
         <th>Name</th>
         <th>Category</th>

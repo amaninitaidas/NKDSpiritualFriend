@@ -152,14 +152,6 @@
   font-weight: bold;
 }
 
-/* ================= TABLE CONTAINER ================= */
-
-.people-table-container {
-  width: 100%;
-  overflow-x: auto;
-  border-top: 1px solid var(--border-color);
-}
-
 /* ================= TABLE ================= */
 
 .people-table {
@@ -305,25 +297,6 @@
   align-items: center;
   margin-bottom: 1px;
   background-color: var(--background-color);
-}
-
-/* .people-table-container div.people-search-container {
-  background-color: var(--background-color);
-  width: 50%;
-} */
-
-.people-table-container input.people-search {
-  padding: 9px 12px;
-  border: 1px solid black;
-  border-radius: 5px;
-  font-size: 14px;
-  width: 100%;
-  background-color: var(--border-color);
-}
-
-.people-search:focus {
-  outline: none;
-  border-color: var(--primary-color);
 }
 
 /* =====================================================

@@ -76,15 +76,15 @@ body {
 .popup-content input[type="number"],
 .popup-content textarea,
 .password-popup-content input[type="text"] {
-  width: 100%;
+  width: 98%;
   padding: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
-  border: 1px solid #ccc;
+  border: 2px solid black;
   border-radius: 8px;
   font-size: 1rem;
   box-sizing: border-box;
-  background-color: var(--white-color);
+  background-color: var(--border-color);
   font-family: Arial, sans-serif;
 }
 
@@ -251,7 +251,7 @@ body {
   padding-right: 10px; /* Optional: Adds some space to the right for scroll bar */
   flex-grow: 1;
   overflow-y: auto;
-  max-height: 50vh; /* Adjust for better balance */
+  max-height: 60vh; /* Adjust for better balance */
   margin-bottom: 10px;
 }
 

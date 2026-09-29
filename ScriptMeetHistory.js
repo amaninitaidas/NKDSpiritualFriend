@@ -110,7 +110,8 @@ function renderMeetingHistory(personType, historyData) {
 
     const tableContainer = document.createElement("div");
 
-    tableContainer.className = "people-table-container";
+    tableContainer.className =
+      "collection-table-container scrollable-content-table";
 
     // =====================================================
     // NO MEETINGS
@@ -142,7 +143,7 @@ function renderMeetingHistory(personType, historyData) {
       table.className = "people-table";
 
       table.innerHTML = `
-          <thead>
+          <thead class="table-header">
             <tr>
               <th>Date</th>
               <th>Place</th>
